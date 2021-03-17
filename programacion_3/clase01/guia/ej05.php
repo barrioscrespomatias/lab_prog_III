@@ -7,7 +7,7 @@ echo "El valor medio es: ".valorMedio($a,$b,$c);
 
 
 
-
+///Obtiene el valor del número medio. Utiliza los métodos minimo y maximo.
 function valorMedio($numeroUno, $numeroDos, $numeroTres):int
 {
   $retorno=-1;
