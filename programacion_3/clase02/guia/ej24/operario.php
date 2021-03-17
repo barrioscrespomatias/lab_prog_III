@@ -4,7 +4,7 @@ class Operario{
   private $apellido;
   private $legajo;
   private $nombre;
-  private $salario;
+  public $salario;
 
   public function __construct($legajo,$apellido,$nombre){
     $this->legajo= $legajo;
@@ -49,7 +49,7 @@ class Operario{
 
   ///Método igualdad que compara dos operarios. Retorna True en caso de
   //ser iguales
-  public function Equals(Operario $opUno, Operario $opDos):boolean
+  public function Equals(Operario $opUno, Operario $opDos):bool
   {
     $retorno = false;
     if($opUno->legajo == $opDos->legajo &&
