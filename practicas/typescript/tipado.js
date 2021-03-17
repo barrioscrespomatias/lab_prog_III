@@ -1,0 +1,14 @@
+var nombre;
+nombre = 'Mateo';
+var documento1;
+documento1 = 35394757;
+var documento2;
+documento2 = 36291716;
+// let numeros:number[];
+// numeros.push(documento1,documento2);
+var listaNumeros = [5, 6, 8, 10];
+var tupla;
+tupla = [0, 'Juan', 1, 'María', 2, 'Pedro'];
+// console.log("Nombre: "+nombre+". DNI: "+numero+"\n");
+console.log(listaNumeros[0]);
+console.log(tupla[1]);
