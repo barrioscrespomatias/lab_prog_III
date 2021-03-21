@@ -13,15 +13,13 @@ let nombreApellido:Function = (nombre:string,apellido:string):void=>
             nombreMinuscula+=nombre[contador];
         }
         contador++;        
-    }
-    console.log("NOMBRE MINUSCULA "+nombreMinuscula+"\n");
+    }   
 
     let str:string="";
     if(nombre && apellido)
     {        
         str+=`${apellido.toUpperCase()}, ${nombre[0].toUpperCase()}${nombreMinuscula.toLocaleLowerCase()}.`
-    }
-    
+    }    
     console.log(str);    
 } 
 

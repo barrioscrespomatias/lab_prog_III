@@ -11,7 +11,6 @@ var nombreApellido = function (nombre, apellido) {
         }
         contador++;
     }
-    console.log("NOMBRE MINUSCULA " + nombreMinuscula + "\n");
     var str = "";
     if (nombre && apellido) {
         str += apellido.toUpperCase() + ", " + nombre[0].toUpperCase() + nombreMinuscula.toLocaleLowerCase() + ".";
