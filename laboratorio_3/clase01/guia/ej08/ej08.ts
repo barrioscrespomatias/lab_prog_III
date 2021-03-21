@@ -1,6 +1,6 @@
 //FACTORIAL
 
-let factorial: Function = (numeroIngresado: number): number => {
+export let factorial: Function = (numeroIngresado: number): number => {
     var retorno: number = 0;
     let i: number = numeroIngresado;
     for (i; i > 1; i--) {
@@ -20,4 +20,4 @@ let factorial: Function = (numeroIngresado: number): number => {
     return retorno;
 }
 
-factorial(5);
+// factorial(5);

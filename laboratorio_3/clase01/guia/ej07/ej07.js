@@ -1,6 +1,8 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.numerosPrimos = void 0;
 var numerosPrimos = function (cantidad) {
-    var i = 0;
+    var i = 1;
     var contadorNumeros = 0;
     for (i; contadorNumeros < cantidad; i++) {
         if (i % 2 != 0) {
@@ -9,5 +11,6 @@ var numerosPrimos = function (cantidad) {
         }
     }
 };
-numerosPrimos(20);
+exports.numerosPrimos = numerosPrimos;
+// numerosPrimos(20);
 //# sourceMappingURL=ej07.js.map

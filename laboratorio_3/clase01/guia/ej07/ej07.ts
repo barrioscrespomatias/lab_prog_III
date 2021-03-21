@@ -1,6 +1,6 @@
-let numerosPrimos:Function =(cantidad:number):void=>
+export let numerosPrimos:Function =(cantidad:number):void=>
 {
-    let i:number=0;
+    let i:number=1;
     var contadorNumeros:number=0;
     for(i;contadorNumeros<cantidad;i++)
     {
@@ -12,4 +12,4 @@ let numerosPrimos:Function =(cantidad:number):void=>
     }
 }
 
-numerosPrimos(20);
+// numerosPrimos(20);
