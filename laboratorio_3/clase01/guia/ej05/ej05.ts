@@ -6,6 +6,7 @@ let nombreApellido:Function = (nombre:string,apellido:string):void=>
 {
     var contador=0;
     var nombreMinuscula:string="";
+
     for (let iterator of nombre)
     {
         if(contador>0&&contador<nombre.length)

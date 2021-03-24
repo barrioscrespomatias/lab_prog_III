@@ -1,7 +1,7 @@
 "use strict";
 var meses;
 var cantidad;
-var i = 0;
+// var i;
 meses =
     [
         "Enero",
@@ -18,7 +18,7 @@ meses =
         "Diciembre"
     ];
 cantidad = meses.length;
-for (i; i < cantidad; i++) {
+for (var i = 0; i < cantidad; i++) {
     console.log("Estamos en el mes de " + meses[i] + ". Le corresponde el n\u00FAmero " + (i + 1) + ".");
 }
 //# sourceMappingURL=ej02.js.map
