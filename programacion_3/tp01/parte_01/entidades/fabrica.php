@@ -7,7 +7,7 @@ include_once 'empleado.php';
 class Fabrica
 {
     private $_cantidadMaxima;
-    public $_empleados;
+    private $_empleados;
     private $_razonSocial;
 
     //Constructor por defecto.
@@ -20,18 +20,33 @@ class Fabrica
 
     //Agrega a la fábrica el empleado pasado como parámetro.
     //En caso de poder agregarlo devuelve true.
-    // Sino pude agregarlo retorna false y lo notifica por echo.
+    //Sino pude agregarlo retorna false y lo notifica por echo.
+    //Luego de agregarlo corrobora que el mismo no se encuentre repetido en
+    //la lista de empleados. En caso de estar repetido, lo borra y retorna false.
     public function AgregarEmpleado(Empleado $emp): bool
     {
         $retorno = false;
-        $cantidadEmpleados = count($this->_empleados);  
+        $cantidadInicialEmpleados = count($this->_empleados);
+        $cantidadActualEmpleados=0;  
 
-        if ($emp != null && $cantidadEmpleados < $this->_cantidadMaxima)
+        if ($emp != null && $cantidadInicialEmpleados < $this->_cantidadMaxima)
         {
             array_push($this->_empleados, $emp);
-            $retorno = true;
-        } else
+            $cantidadActualEmpleados=count($this->_empleados);
+            if($cantidadInicialEmpleados<$cantidadActualEmpleados)
+            {
+                $this->EliminarEmpleadosRepetidos();
+                if (count($this->_empleados) > $cantidadInicialEmpleados)
+                    $retorno = true;
+                else
+                echo "Se eliminó el registro repetido de ".$emp->GetNombre()."<br>";
+            }
+        } 
+        else
             echo ("No se pudo agregar al empleado.\n");
+
+        if($retorno)
+            $this->EliminarEmpleadosRepetidos();
 
         return $retorno;
     }
@@ -59,30 +74,27 @@ class Fabrica
     {
         $retorno = false;
         $index = -1;
-        foreach ($this->_empleados as $item) 
-        {
-            if ($item->GetDni() == $emp->GetDni()) 
-            {
-                $index = array_search($emp, $this->_empleados);                
-                if ($index != -1) 
-                {
-                    unset($this->_empleados[$index]);
-                    $retorno = true;
-                    echo "Se ha eliminado el empleado ".$item->GetNombre()."<br><br>";
-                    break;
-                }                 
-            }
-            else
-            echo "El empleado no existe!!<br>";
+
+        $index = array_search($emp, $this->_empleados);
+        //Analiza de una forma precisa. !==
+        if ($index !== false) 
+        {            
+            unset($this->_empleados[$index]);
+            $retorno = true;
+            echo "Se ha eliminado el empleado " . $emp->GetNombre() . "<br><br>";
         }
+        else
+        echo "El empleado no existe!!<br>";
         return $retorno;
     }
 
-    public function EliminarEmpleadosRepetidos(): void
+    private function EliminarEmpleadosRepetidos(): void
     {
-        print_r(array_unique($this->_empleados));
+        //SORT_REGULAR - compara ítems normalmente (no cambia los tipos)
+        $this->_empleados=array_unique($this->_empleados,SORT_REGULAR);
     }
 
+    //Muestra todos los atributos de la clase Fábrica.
     public function ToString():string
     {
         $strSalida="";
@@ -94,14 +106,10 @@ class Fabrica
         {
             $strSalida.=$item->ToString()."<br>";
         }
-        $strSalida.="<br>"; 
-
-        
+        $strSalida.="<br>";         
         return $strSalida;
 
     }
 
-
-
-
+    
 }
