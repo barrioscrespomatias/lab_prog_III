@@ -5,94 +5,84 @@
 // 3- Comparar dos términos.
 
 
-let factorizar : Function = (numeroIngresado : number ) : Array<number> =>
-{
-    
+let factorizar : Function = (numeroIngresado : number ) : Array<string> =>
+{    
     //Auxiliar para no trabajar en la variable retorno.
-    let auxiliarString : string = "";
-    let numeroaFactorear : number=0;
-    let i : number = 1;
-    let factoresPrimos : Array<number> =[];    
-
-    //Obtener número entero.
-    auxiliarString = numeroIngresado.toString();
-    auxiliarString = auxiliarString.split(".",1).toString();
-
-    numeroaFactorear = parseInt(auxiliarString);
+    let auxiliarString : Array<string> = Array();    
+    let i : number = 1;   
 
     do {
-        if (numeroaFactorear / i != numeroaFactorear) 
+        if (numeroIngresado / i != numeroIngresado) 
         {
-            if (numeroaFactorear % i == 0) 
+            if (numeroIngresado % i == 0) 
             {
-                factoresPrimos.push(i)
-                numeroaFactorear = numeroaFactorear / i;
+                auxiliarString.push(i.toString());                
+                numeroIngresado /= i;
                 i = 1;
             }
         }
         i++;
-    } while (numeroaFactorear > 1);
-    console.log(factoresPrimos);
+    } while (numeroIngresado > 1);
 
-    if (factoresPrimos.length == 0)
-        console.log("No se ha podido factorizar");
+    if(auxiliarString.length<2)
+    //esto no me gusta ni un poquito.
+        auxiliarString=[];
 
-    return factoresPrimos;
+    return auxiliarString;
 }
 
 
-let sumaDeTerminos : Function = (listaDeNumeros:Array<number>):number=>
+let sumaDeTerminos : Function = (numeroStr:string):number=>
 {
     var suma: number = 0;
-   
+    for (let i = 0; i < numeroStr.length; i++)
     {
-        for (let i = 0; i < listaDeNumeros.length; i++) {
-            suma += listaDeNumeros[i];
-        }       
-
+        suma += parseInt(numeroStr[i]);
     }
-   
-    
     return suma;
 }
 
 let comparaTerminos : Function = (terminoUno:number, terminoDos:number):boolean=>
 {
     let retorno : boolean = false;
-    if(terminoUno == terminoDos)
+    if(terminoUno === terminoDos)
         retorno = true;
 
     return retorno;
 }
 
-let covertirArrayNumeros: Function = (numero: number): Array<number> =>
-{
-    let retorno : Array<number> = Array();
-    let numeroToString = numero.toString();
+
+// factoriza y obtiene la descomposición en forma de array<string>.
+// El proble está en que al devolver el numero factorizado de 22
+// da 2 dos numeros. 2 y 11. Entonces al querer sumar 2+11=13 != 2+2 = 4 
+
+// Deberia poder descomponer nuevamente el segundo numero (11) así la suma da 
+// como resultado el numero 4 = 2+1+1 que es igual a 2+2 = 4
+
+
+let numero: number = 13;
+console.log(factorizar(numero));
     
-    let i:number=0;
-    for(i;i<numeroToString.length;i++)
-    {
-        retorno.push(parseInt(numeroToString[i]));
-        console.log(retorno);
-    } 
-
-    return retorno;
     
-} 
+    
+    
+    
+// for (numero; contador < 10; numero++) {    
+    
+    // let sumaTerminosFactorizado: number = sumaDeTerminos(strFactorizado);
+    // let sumaTerminosOriginal: number = sumaDeTerminos(numero.toString());
+
+    // // if (comparaTerminos(sumaTerminosFactorizado, sumaTerminosOriginal)) {
+    // //     console.log(numero);
+    // //     contador++;
+    // // }
+    // console.log(comparaTerminos(sumaTerminosFactorizado, sumaTerminosOriginal));
 
 
-let numero:number = 4;
+// }
 
-let factores : Array<number> = Array();
-factores = factorizar(numero);
 
-let numeroConvertidoArray: Array<number> = Array();
-numeroConvertidoArray = covertirArrayNumeros(numero);
 
-let sumaTerminosDelNumero:number = sumaDeTerminos(numeroConvertidoArray);
-let sumaTerminosDelFactoreo:number = sumaDeTerminos(factores);
 
-console.log(comparaTerminos(sumaTerminosDelNumero,sumaTerminosDelFactoreo));
 
 

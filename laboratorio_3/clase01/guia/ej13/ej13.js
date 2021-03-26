@@ -5,60 +5,50 @@
 // 3- Comparar dos términos.
 var factorizar = function (numeroIngresado) {
     //Auxiliar para no trabajar en la variable retorno.
-    var auxiliarString = "";
-    var numeroaFactorear = 0;
+    var auxiliarString = Array();
     var i = 1;
-    var factoresPrimos = [];
-    //Obtener número entero.
-    auxiliarString = numeroIngresado.toString();
-    auxiliarString = auxiliarString.split(".", 1).toString();
-    numeroaFactorear = parseInt(auxiliarString);
     do {
-        if (numeroaFactorear / i != numeroaFactorear) {
-            if (numeroaFactorear % i == 0) {
-                factoresPrimos.push(i);
-                numeroaFactorear = numeroaFactorear / i;
+        if (numeroIngresado / i != numeroIngresado) {
+            if (numeroIngresado % i == 0) {
+                auxiliarString.push(i.toString());
+                numeroIngresado /= i;
                 i = 1;
             }
         }
         i++;
-    } while (numeroaFactorear > 1);
-    console.log(factoresPrimos);
-    if (factoresPrimos.length == 0)
-        console.log("No se ha podido factorizar");
-    return factoresPrimos;
+    } while (numeroIngresado > 1);
+    if (auxiliarString.length < 2)
+        //esto no me gusta ni un poquito.
+        auxiliarString = [];
+    return auxiliarString;
 };
-var sumaDeTerminos = function (listaDeNumeros) {
+var sumaDeTerminos = function (numeroStr) {
     var suma = 0;
-    {
-        for (var i = 0; i < listaDeNumeros.length; i++) {
-            suma += listaDeNumeros[i];
-        }
+    for (var i = 0; i < numeroStr.length; i++) {
+        suma += parseInt(numeroStr[i]);
     }
     return suma;
 };
 var comparaTerminos = function (terminoUno, terminoDos) {
     var retorno = false;
-    if (terminoUno == terminoDos)
+    if (terminoUno === terminoDos)
         retorno = true;
     return retorno;
 };
-var covertirArrayNumeros = function (numero) {
-    var retorno = Array();
-    var numeroToString = numero.toString();
-    var i = 0;
-    for (i; i < numeroToString.length; i++) {
-        retorno.push(parseInt(numeroToString[i]));
-        console.log(retorno);
-    }
-    return retorno;
-};
-var numero = 4;
-var factores = Array();
-factores = factorizar(numero);
-var numeroConvertidoArray = Array();
-numeroConvertidoArray = covertirArrayNumeros(numero);
-var sumaTerminosDelNumero = sumaDeTerminos(numeroConvertidoArray);
-var sumaTerminosDelFactoreo = sumaDeTerminos(factores);
-console.log(comparaTerminos(sumaTerminosDelNumero, sumaTerminosDelFactoreo));
+// factoriza y obtiene la descomposición en forma de array<string>.
+// El proble está en que al devolver el numero factorizado de 22
+// da 2 dos numeros. 2 y 11. Entonces al querer sumar 2+11=13 != 2+2 = 4 
+// Deberia poder descomponer nuevamente el segundo numero (11) así la suma da 
+// como resultado el numero 4 = 2+1+1 que es igual a 2+2 = 4
+var numero = 13;
+console.log(factorizar(numero));
+// for (numero; contador < 10; numero++) {    
+// let sumaTerminosFactorizado: number = sumaDeTerminos(strFactorizado);
+// let sumaTerminosOriginal: number = sumaDeTerminos(numero.toString());
+// // if (comparaTerminos(sumaTerminosFactorizado, sumaTerminosOriginal)) {
+// //     console.log(numero);
+// //     contador++;
+// // }
+// console.log(comparaTerminos(sumaTerminosFactorizado, sumaTerminosOriginal));
+// }
 //# sourceMappingURL=ej13.js.map
