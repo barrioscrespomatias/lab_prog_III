@@ -2,14 +2,6 @@
 include_once '../parte_01/entidades/empleado.php';
 include_once '../parte_01/entidades/fabrica.php';
 
-
-// echo $emp1->GetNombre()."<br>";
-// echo $emp1->GetSueldo()."<br>";
-// echo $emp1->Hablar($idiomaVacio);
-// echo $emp1->ToString();
-// echo "<br>Sueldos: $".$fabrica->CalcularSueldos();
-
-
 $fabrica = new Fabrica("La fabriquita");
 
 $idiomas = array("Inglés","Italiano","Chino");
@@ -18,6 +10,15 @@ $idiomaVacio=array();
 $emp1 = new Empleado("Pablo","Pérez",1111,'M',1111,15000,"Mañana");
 $emp2 = new Empleado("Pedro","Iarley",2222,'M',2222,10000,"Tarde");
 $emp3 = new Empleado("Bombón","Bahiano",3333,'M',3333,12000,"Tarde");
+
+echo "<hr/>Prueba con un empleado<br>";
+echo $emp1->GetNombre()."<br>";
+echo $emp1->GetSueldo()."<br>";
+echo $emp1->Hablar($idiomas);
+echo $emp1->ToString();
+
+echo "<hr>Prueba de la fábrica<br>";
+
 
 //Agrega al empleado emp1 y lo elimina inmediatamente.
 $retorno=$fabrica->AgregarEmpleado($emp1);

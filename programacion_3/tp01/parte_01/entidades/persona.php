@@ -50,7 +50,7 @@ abstract class Persona
     public function GetSexo(): char
     {
         $retorno = '-';
-        if ($this->_sexo === 'm' || $this->_sexo === 'f')
+        if ($this->_sexo === 'm' || $this->_sexo === 'f' || $this->_sexo ==='M' || $this->_sexo ==='F')
             $retorno = $this->_nombre;
 
         return $retorno;
@@ -68,6 +68,7 @@ abstract class Persona
             $strSalida .= $this->_apellido . "-" . $this->_nombre . "-" . $this->_dni . "-" . $this->_sexo . "-";
         else
         $strSalida = "No se pudo mostrar la persona.<br>";
+        
         return $strSalida;
     }
 }

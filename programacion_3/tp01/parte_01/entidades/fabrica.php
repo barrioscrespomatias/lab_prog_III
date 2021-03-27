@@ -1,7 +1,5 @@
 <?php
 
-use function PHPSTORM_META\type;
-
 include_once 'empleado.php';
 
 class Fabrica
@@ -81,7 +79,7 @@ class Fabrica
         {            
             unset($this->_empleados[$index]);
             $retorno = true;
-            echo "Se ha eliminado el empleado " . $emp->GetNombre() . "<br><br>";
+            echo "Se ha eliminado el empleado " . $emp->GetNombre() . "<br>";
         }
         else
         echo "El empleado no existe!!<br>";
@@ -104,7 +102,7 @@ class Fabrica
         $strSalida.="Lista de empleados: "."<br><br>";
         foreach($this->_empleados as $item)
         {
-            $strSalida.=$item->ToString()."<br>";
+            $strSalida.=$item->ToString();
         }
         $strSalida.="<br>";         
         return $strSalida;
