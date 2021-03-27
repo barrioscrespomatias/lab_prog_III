@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./producto.js"></script>
+    <title>Formulario inscripción</title>
+</head>
+<body>
+
+    <form>
+        <table align="center">
+            <tr>
+                <td colspan="3"><h3>Elija su producto</h3></td>
+            </tr>
+            <tr>
+                <td colspan="3"><hr/></td>
+            </tr>
+            <tr>
+                <td>Mate</td>
+                <td>
+                    <input type="checkbox" name="chMate" id="chMate" value="500">
+                </td>
+            </tr>
+            <tr>
+                <td>Bombilla</td>
+                <td>
+                    <input type="checkbox" name="chBombilla" id="chBombilla" value="100">
+                </td>
+            </tr>
+            <tr>
+                <td>Termo</td>
+                <td>
+                    <input type="checkbox" name="chTermo" id="chTermo" value="1500">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3"><hr/></td>
+            </tr>
+            <tr>
+                <td colspan="3"><h3>Elija cantidad</h3></td>
+            </tr>
+            <tr>
+                <td colspan="3"><hr/></td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>
+                    <input type="radio" name="rdoCantidad" id="1" value="1">
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>
+                    <input type="radio" name="rdoCantidad" id="2" value="2">
+                </td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>
+                    <input type="radio" name="rdoCantidad" id="3" value="3">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3"><hr/></td>
+            </tr>
+            <tr>
+                <td><h3>Seleccione forma de pago</h3></td>                
+                <td>
+                    <select name="cboPago" id="">
+                        <optgroup label="Efectivo">                            
+                            <option value="T">En tienda</option>
+                            <option value="D">Domicilio</option>
+                        </optgroup>
+                        <optgroup label="Tarjeta">
+                            <option value="1">Crédito</option>
+                            <option value="2">Débito</option>
+                        </optgroup>
+                    </select>
+                </td>            
+            </tr>
+            <tr>
+                <td colspan="3"><hr/></td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <input type="reset" value="Limpiar Datos">
+                </td>                
+            </tr>    
+            <tr>
+                <td colspan="3">
+                    <input type="submit" name="" id="btnEnviar" value="Enviar">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <input type="button" onclick="datosCompra()" value="Descripcion pedido">
+                </td>
+            </tr>       
+
+        </table>
+    </form>
+
+    
+</body>
+</html>
