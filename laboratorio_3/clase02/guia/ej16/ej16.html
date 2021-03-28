@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../estilos.css">
+    <script src="./ej16.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <form>
+            <table>
+                <thead>
+                    <th colspan="12">Formulario de datos personales</th>
+                </thead>
+                <tr>
+                    <td colspan="6">
+                        <label for="nombre">Ingrese su nombre:</label>
+                    </td>
+                    <td colspan="6">                        
+                        <input type="text" name="" name="nombre" id="nombre">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6">
+                        <label for="mail">Ingrese su mail:</label>
+                    </td>
+                    <td>
+                        <input type="email" name="email" id="email">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6">
+                        <label for="dni">Ingrese su DNI:</label>                        
+                    </td>
+                    <td colspan="6">
+                        <input type="number" name="dni" id="dni" min="1000000" max="1000000000" id="dni">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6">
+                        <label for="cv">Pegue su hoja de ruta:</label>
+                    </td>
+                    <td colspan="6">
+                        <textarea rows="3" id="cv" name="cv"></textarea>                        
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" onclick="mostrarDatos()" name="btnEnviar" id="btn" value="Enviar">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    
+</body>
+</html>

@@ -7,3 +7,12 @@ table{
     width: 720px;
     height: 480px;
 }
+#dni,#cv
+{
+    width: 93%;
+}
+
+#btn{    
+    color: brown;
+}
+
