@@ -25,11 +25,8 @@ if ($accion == "verificar")
 else
     echo "No se ha podido obtener el valor de name.<br>";
 
-
 $datos = explode("- ",$auxArchivo);
 
-// Se divide por 3 porque es la cantidad de atributos que tiene una persona.
-$cantidadPersonas  = (count($datos)-1)/3;
 
 //Salta de a tres porque es la cantidad de datos que tiene una persona
 //Sino saltara de a 3, repetiría los datos de la persona 1 en la persona 2, etc.
@@ -41,10 +38,7 @@ for($i=1;$i<count($datos);$i+=3)
       
     $personaAux = new Persona($auxLegajo,$auxNombre,$auxApellido);    
     array_push($listaPersonas,$personaAux);
-    $contadorPersonas++;
-
-    if($contadorPersonas == $cantidadPersonas+1)
-        break;         
+    $contadorPersonas++;           
 }
 
 
