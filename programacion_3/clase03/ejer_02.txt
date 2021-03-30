@@ -1,0 +1,6 @@
+Enviar (por GET) a la página nexo.php:
+*-accion => 'listado'
+
+Recuperar el valor enviado y mostrar el contenido completo del archivo ./archivos/alumnos.txt
+Cada registro se mostrará:
+*- legajo - apellido - nombre

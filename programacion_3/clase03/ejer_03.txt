@@ -1,0 +1,10 @@
+Enviar (por POST) a la página nexo.php:
+*-accion => 'verificar'
+*-legajo => 'su legajo'
+
+Recuperar los valores enviados y buscar en el archivo ./archivos/alumnos.txt la existencia de un registro que coincida con el legajo recuperado.
+Si se encuentra, mostrar:
+*- legajo - apellido - nombre
+Si no se encuentra, mostrar el siguiente mensaje:
+'El alumno con legajo 'xxx' no se encuentra en el listado'
+Siendo 'xxx' el valor del legajo enviado por POST.
