@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <link rel="stylesheet" href="../../../estilos.css">
-    <script src=""></script>
+    <script src="./ej18.js"></script>
 
     <title>Document</title>
 </head>
+
 <body>
     <div class="container">
-        <form >
-            <table>
+        <form>
+            <table >
                 <thead>
                     <th colspan="12">Área de computos</th>
                 </thead>
@@ -22,12 +24,12 @@
                         <label for="nombre">Ingresa tu nombre</label>
                     </td>
                     <td colspan="6">
-                        <input type="text" name="nombre" id="nombre" placeholder="Pedrito...">
-                    </td>                    
+                        <input type="text" name="nombre" id="nombre">
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="12">
-                        <hr/>
+                        <hr />
                     </td>
                 </tr>
                 <tr>
@@ -36,44 +38,45 @@
                     </th>
                 </tr>
 
-              <tr>
-                  <td colspan="3" rowspan="2">
-                    <label for="Excelente">Excelente</label>
-                  </td>
-                  <td colspan="3" rowspan="2">
-                    <label for="Bueno">Bueno</label>
-                  </td>
-                  <td colspan="3" rowspan="2">
-                    <label for="Regular">Regular</label>
-                  </td>
-                  <td colspan="3" rowspan="2">
-                    <label for="Malo">Malo</label>
-                  </td>                  
-              </tr>
-              <tr>
-                  <td colspan="3">
-                    <input type="radio" name="Excelente" id="Excelente">
-                  </td>                  
-              </tr>
-              <tr>
-                <td colspan="3">
-                  <input type="radio" name="Excelente" id="Excelente">
-                </td>                  
-            </tr>
+                <tr>
+                    <td colspan="3">
+                        <label for="E">Excelente</label>
+                    </td>
+                    <td colspan="3">
+                        <label for="B">Bueno</label>
+                    </td>
+                    <td colspan="3">
+                        <label for="R">Regular</label>
+                    </td>
+                    <td colspan="3">
+                        <label for="M">Malo</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <input type="radio" name="rdo"  value="Excelente">
+                    </td>
+                    <td colspan="3">
+                        <input type="radio" name="rdo"  value="Bueno">
+                    </td>
+                    <td colspan="3">
+                        <input type="radio" name="rdo"  value="Regular">
+                    </td>
+                    <td colspan="3">
+                        <input type="radio" name="rdo"  value="Malo">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <input type="submit" onclick="obtenerValoracion()" name="" id="">
+                    </td>
+                </tr>
 
-             
-             
-                    
-                        
-                    
-                   
-                  
-                
-                    
-                   
+
             </table>
         </form>
     </div>
-    
+
 </body>
+
 </html>

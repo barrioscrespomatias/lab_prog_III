@@ -1,20 +1,19 @@
-table{
-    border:2px solid;    
-}
-
-#img
+/* #img
 {
     width: 720px;
     height: 480px;
+} */
+
+#radio{
+    text-align: left;
+    padding-left: 20%;
 }
-#dni,#cv
-{
-    width: 93%;
+#btnLimpiar,#btnEnviar{
+    padding-left: 80%;
+    text-align: right;
+    
 }
 
-#btn{    
-    color: brown;
-}
 
 
 
