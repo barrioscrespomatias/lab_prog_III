@@ -1,4 +1,3 @@
-"use strict";
 /* #region  VALIDACIONES */
 var AdministrarValidaciones = function () {
     /* #region  DNI */
@@ -148,4 +147,3 @@ var ValidarLetras = function (str) {
             retorno = true;
     return retorno;
 };
-//# sourceMappingURL=validaciones.js.map

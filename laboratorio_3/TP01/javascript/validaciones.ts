@@ -84,7 +84,7 @@ let AdministrarValidaciones: Function = (): void => {
         if (ValidarRangoNumerico(valorSueldo, 8000, sueldoMaximo))
             console.log("Ok...\n");
         else
-            alert(`El SUELDO ${valorSueldo} se encuentra fuera de los parámetros correctos segun el turo ${valorCboTurno}: $8000 - $${sueldoMaximo}`);
+            alert(`El SUELDO ${valorSueldo} se encuentra fuera de los parámetros correctos segun el turno ${valorCboTurno}: $8000 - $${sueldoMaximo}`);
                 
     }
     else
