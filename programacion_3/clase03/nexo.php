@@ -1,40 +1,47 @@
 <?php
 
-// $accion = $_POST["accion"];
-// $nombre = $_POST["nombre"];
-// $apellido = $_POST["apellido"];
-// $legajo = $_POST["legajo"];
+//Se vincula con el name del formulario
+// $accion = isset($_GET["accion"]) ? $_GET["accion"] : "Error";
+$accion = isset($_POST["accion"]) ? $_POST["accion"] : $_GET["accion"];
 
-//En get va el name!
-$accion = $_GET["accion"];
+$nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : "Error";
+$apellido = isset($_POST["apellido"]) ? $_POST["apellido"] : "Error";
+$legajo = isset($_POST["legajo"]) ? $_POST["legajo"] : "Error";
 
 $path = "./archivos/alumnos.txt";
-$archivo = fopen($path,"r");
-
-var_dump($accion);
-
-// if ($accion == "alta")
-// {
-//     fwrite($archivo, "- ${legajo} - ${apellido} - ${nombre}\r\n");
-//     echo "Se ha guardado correctamente el registro de ${nombre}";
-// }
-// else
-//     echo "No se ha podido realizar el alta<br>"; 
+$cadena = $legajo ." - ". $apellido ." - ". $nombre."\n";
 
 
-if ($accion == "listado")
-{
-    // fread($archivo, "- ${legajo} - ${apellido} - ${nombre}\r\n");
-    // echo "Se ha guardado correctamente el registro de ${nombre}";
-    echo "<h2>". fread($archivo, filesize($path)) . "<br>";
+switch ($accion) {
+    case "alta":
+        $archivo = fopen($path, "a");
+        fwrite($archivo, $cadena);
+        echo "Se ha guardado correctamente el registro de ${nombre}";
+        fclose($archivo);
+        break;
+    case "listado":
+        $archivo = fopen($path, "r");
+        do {
+            echo fgets($archivo) . "<br>";
+        } while (!feof($archivo));
+       
+        fclose($archivo);
+        break;
+    case "verificar":
+        $archivo = fopen($path, "r");
+
+        while (!feof($archivo)) {
+
+            $renglon = fgets($archivo);
+            $persona = explode(" - ", $renglon);
+            if ($persona[0] == $legajo)
+                break;
+        }
+
+        foreach ($persona as $item) {
+            echo $item . " ";
+        }
+
+        fclose($archivo);
+        break;
 }
-else
-    echo "No se pudo obtener el listado<br>"; 
-
-fclose($archivo);
-
-
-
-
-
-?>
