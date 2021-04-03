@@ -65,7 +65,7 @@ abstract class Persona
     {
         $strSalida = "";
         if ($this != null)
-            $strSalida .= $this->_apellido . "-" . $this->_nombre . "-" . $this->_dni . "-" . $this->_sexo . "-";
+            $strSalida .= $this->_nombre . "-" . $this->_apellido . "-" . $this->_dni . "-" . $this->_sexo . "-";
         else
         $strSalida = "No se pudo mostrar la persona.<br>";
         

@@ -81,10 +81,10 @@ class Empleado extends Persona
         $strSalida = "";
         if ($this != null) {
             $strSalida = parent::ToString();
-            $strSalida .= $this->_legajo . "-" . $this->_sueldo . "-" . $this->_turno . ".<br>";
+            $strSalida .= $this->_legajo . "-" . $this->_sueldo . "-" . $this->_turno;
         }
         else
-        $strSalida = "No se ha podido mostrar la información del empleado.<br>";
+        $strSalida = "No se ha podido mostrar la información del empleado.";
 
         return $strSalida;
     }

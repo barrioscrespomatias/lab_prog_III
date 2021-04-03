@@ -1,17 +1,10 @@
-/* #img
-{
-    width: 720px;
-    height: 480px;
-} */
-
 #radio{
     text-align: left;
     padding-left: 20%;
 }
 #btnLimpiar,#btnEnviar{
     padding-left: 80%;
-    text-align: right;
-    
+    text-align: right;    
 }
 
 
