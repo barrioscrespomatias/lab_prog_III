@@ -3,6 +3,8 @@
 include '../parte_01/entidades/empleado.php';
 include '../parte_01/entidades/fabrica.php';
 
+echo "Funciona!!<br>";
+
 $btnEnviar = isset($_POST["btnEnviar"]) ? $_POST["btnEnviar"] : "Error";
 $nombre = isset($_POST["txtNombre"]) ? $_POST["txtNombre"] : "Error";
 $apellido = isset($_POST["txtApellido"]) ? $_POST["txtApellido"] : "Error";
