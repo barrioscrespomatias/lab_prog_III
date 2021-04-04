@@ -1,7 +1,6 @@
 <?php
 
 include '../parte_01/entidades/empleado.php';
-// include '../../../TP01/Front/parte_02/index.html'
 
 $path="./archivos/empleados.txt";
 $archivo = fopen($path,"r");
@@ -28,7 +27,8 @@ foreach ($listaEmpleados as $unEmpleado) {
         echo "<td colspan=10>";     
             echo $unEmpleado->ToString();
         echo "</td>";
-        echo "<td colspan=2>";     
+        echo "<td colspan=2>";
+            //De acá salen los name para recibir en eliminar.php. Variables pasadas por GET en URL.     
             echo "<a href='eliminar.php?legajo={$unEmpleado->GetLegajo()}&nombre={$unEmpleado->GetNombre()}' name='delete'>Eliminar</a>";
         echo "</td>";
     echo "</tr>";

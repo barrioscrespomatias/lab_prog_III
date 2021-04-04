@@ -1,7 +1,2 @@
-Juliana-Salvemini-1000001-F-101-8000-Mañana
-Edwin-Cardona-1000002-M-102-8000-Mañana
-Juan-Fernandez-1000004-M-104-8000-Mañana
-Baltazar-Bravo-1000005-M-105-8000-Mañana
-Vladimir-Calma-1000006-M-106-8000-Mañana
-Benicio-Puccar-1000007-M-107-8000-Mañana
-Toto-Salvio-1000008-M-108-8000-Mañana
+Juliana-Salvemini-1000000-F-100-8000-Mañana
+Juliana-Salvemini-1000000-M-100-8000-Mañana

@@ -2,7 +2,6 @@
 
 include '../parte_01/entidades/empleado.php';
 include '../parte_01/entidades/fabrica.php';
-// include '../../../TP01/Front/index.html';
 
 $btnEnviar = isset($_POST["btnEnviar"]) ? $_POST["btnEnviar"] : "Error";
 $nombre = isset($_POST["txtNombre"]) ? $_POST["txtNombre"] : "Error";
@@ -14,9 +13,7 @@ $sueldo = isset($_POST["txtSueldo"]) ? $_POST["txtSueldo"] : "Error";
 $turno = isset($_POST["rdoTurno"]) ? $_POST["rdoTurno"] : "Error";
 
 $archivo;
-//ERROR. El archivo debe ir el la carpeta archivos/empleados.txt
 $path = '../parte_03/archivos/empleados.txt';
-
 
 if($btnEnviar == "Enviar")
 {
@@ -37,19 +34,17 @@ if($btnEnviar == "Enviar")
    $fabrica = new Fabrica("La fabrica");
    $fabrica->SetCantidadMaxima(7);
    
-   // ---------------------------------Cargar la fábrica--------------------------
-   
-   $fabrica->TraerDeArchivo('../parte_03/archivos/empleados.txt');
-  
+   // ---------------------------------Cargar la fábrica--------------------------   
+   $fabrica->TraerDeArchivo($path);  
    // ---------------------------------Agregar nuevo empleado----------------------
    if($fabrica->AgregarEmpleado($empleado))
    {
-      $fabrica->GuardarEnArchivo('../parte_03/archivos/empleados.txt');
+      $fabrica->GuardarEnArchivo($path);
       echo "<br><td><a href='mostrar.php'>Mostrar la lista de empleados</a></td></tr>";
    }
    else
    {
-      echo "<br>No se pudo agregar el empleado " . $empleado->GetNombre();
+      echo "<br>".$empleado->GetNombre()." ya se encontraba en la fábrica.";
       echo "<br><td><a href='../../../TP01/Front/parte_02/index.html'>Ir a la página principal</a></td></tr>";
    }
    

@@ -3,9 +3,6 @@
 include_once 'empleado.php';
 include_once 'interfaces.php';
 
-
-
-
 class Fabrica implements IArchivo
 {
     private $_cantidadMaxima;
@@ -18,12 +15,7 @@ class Fabrica implements IArchivo
         $this->_cantidadMaxima = 5;
         $this->_razonSocial = $razonSocial;
         $this->_empleados = array();
-    }
-
-    public function SetCantidadMaxima($cantidad)
-    {
-        $this->_cantidadMaxima = $cantidad;
-    }
+    }   
 
     //Agrega a la fábrica el empleado pasado como parámetro.
     //En caso de poder agregarlo devuelve true.
@@ -37,20 +29,23 @@ class Fabrica implements IArchivo
         $cantidadActualEmpleados = 0;
 
         if ($emp != null && $cantidadInicialEmpleados < $this->_cantidadMaxima) {
-            array_push($this->_empleados, $emp);
-            $cantidadActualEmpleados = count($this->_empleados);
-            if ($cantidadInicialEmpleados < $cantidadActualEmpleados) {
-                $this->EliminarEmpleadosRepetidos();
-                if (count($this->_empleados) > $cantidadInicialEmpleados)
-                    $retorno = true;
-                else
-                    echo "Se eliminó el registro repetido de " . $emp->GetNombre() . "<br>";
-            }
-        } else
-            echo ("No se pudo agregar al empleado.\n");
+            // if (!$this->EmpleadoExiste($emp)) {
+                array_push($this->_empleados, $emp);
+                $cantidadActualEmpleados = count($this->_empleados);
+                if ($cantidadInicialEmpleados < $cantidadActualEmpleados) {
+                    $this->EliminarEmpleadosRepetidos();
+                    if (count($this->_empleados) > $cantidadInicialEmpleados)
+                        $retorno = true;
+                    else
+                        echo "Se eliminó el registro repetido de " . $emp->GetNombre() . "<br>";
+                }
+            // } 
+            else
+                echo ("No se pudo agregar al empleado.\n");
 
-        if ($retorno)
-            $this->EliminarEmpleadosRepetidos();
+            if ($retorno)
+                $this->EliminarEmpleadosRepetidos();
+        }           
 
         return $retorno;
     }
@@ -77,15 +72,13 @@ class Fabrica implements IArchivo
         $index = false;
         $contador = 0;
 
-        foreach($this->_empleados as $item)
-        {
-            if($item->GetLegajo() == $emp->GetLegajo() && $item->GetNombre() == $emp->GetNombre())
-            {
+        foreach ($this->_empleados as $item) {
+            if ($item->GetLegajo() == $emp->GetLegajo() && $item->GetNombre() == $emp->GetNombre()) {
                 $index = $contador;
                 break;
             }
             $contador++;
-        }               
+        }
 
         //Analiza de una forma precisa. !==
         if ($index !== false) {
@@ -99,7 +92,7 @@ class Fabrica implements IArchivo
 
     private function EliminarEmpleadosRepetidos(): void
     {
-        //SORT_REGULAR - compara ítems normalmente (no cambia los tipos)
+        //SORT_REGULAR - compara ítems normalmente (no cambia los tipos)        
         $this->_empleados = array_unique($this->_empleados, SORT_REGULAR);
     }
 
@@ -142,27 +135,51 @@ class Fabrica implements IArchivo
     // fábrica (utilizando el método AgregarEmpleado)
     public function TraerDeArchivo($nombreArchivo): void
     {
-        
+
         $archivo = fopen($nombreArchivo, "r");
         $cantidadAnteriorEmpleados = count($this->_empleados);
         $contador = 0;
-       
+
 
         while (!feof($archivo)) {
             $renglon = fgets($archivo);
             $empleado = explode("-", $renglon);
             if ($empleado[0] != NULL) {
                 $variableTipoEmpleado = new Empleado($empleado[0], $empleado[1], $empleado[2], $empleado[3], $empleado[4], $empleado[5], trim($empleado[6]));
-            
-                if ($this->AgregarEmpleado($variableTipoEmpleado))
-                $contador++;
-            }
 
-            
+                if ($this->AgregarEmpleado($variableTipoEmpleado))
+                    $contador++;
+            }
         }
         $cantidadActualDeEmpleados = count($this->_empleados);
         if ($cantidadAnteriorEmpleados + $contador == $cantidadActualDeEmpleados);
         echo "Se han traído todos los empleados del archivo<br>";
     }
     /* #endregion */
+
+     /* #region  FUNCIONES PROPIAS */
+
+    // Setea la cantidad máxima en el numero pasado como parámetro
+    public function SetCantidadMaxima($cantidad)
+    {
+        $this->_cantidadMaxima = $cantidad;
+    }
+
+    //Si el empleado existe que recibe como parámetro tiene el mismo legajo
+    // que alguno de los empleados existentes en la lista de empleados, retorna
+    // false, sino true.
+    public function EmpleadoExiste(Empleado $emp): bool
+    {
+        $retorno = false;
+        foreach ($this->_empleados as $item) {
+            if ($item->GetLegajo() == $emp->GetLegajo())
+            {
+                $retorno = true;
+                break;
+            }                
+        }
+        return $retorno;
+    }
+    /* #endregion */
+
 }
