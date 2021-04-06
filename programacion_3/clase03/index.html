@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="nexo.php" method="POST" name="accion" enctype="multipart/form-data">
+        <table border="1px">
+            <thead>
+                <th colspan="12">Carga de empleados</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="6">
+                        <label for="nombre">Ingrese nombre:</label>
+                    </td>
+                    <td colspan="6">
+                        <input type="text" name="nombre" id="nombre">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6">
+                        <label for="apellido">Ingrese apellido:</label>
+                    </td>
+                    <td colspan="6">
+                        <input type="text" name="apellido" id="apellido">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6">
+                        <label for="legajo">Ingrese legajo:</label>
+                    </td>
+                    <td colspan="6">
+                        <input type="number" name="legajo" id="legajo" min="1" max="10">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6">
+                        <label for="legajo">Ingrese foto:</label>
+                    </td>
+                    <td colspan="6">
+                        <input type="file" name="foto">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6">
+                        <input type="submit" id="alta" name="btnEnviar" value="alta">
+                    </td>
+                    <td colspan="6">
+                        <input type="submit" id="listado" name="btnEnviar" value="listado">
+                    </td>
+                </tr>                
+            </tbody>
+        </table>
+    </form>
+</body>
+
+</html>

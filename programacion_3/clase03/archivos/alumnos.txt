@@ -1,4 +1,9 @@
-1 - Roca - a
-2 - Roca - b
-3 - Roca - c
-4444 - Fernandez - Maria
+1111 - Gomez - Leandro - ./fotos/1111_Leandro.jpg
+2222 - Fernandez - Juan - ./fotos/2222_Juan.jpg
+2 - Fernandez - Matias - ./fotos/2_Matias.jpg
+4 - Fernandez - Matias - ./fotos/4_Matias.jpg
+4 - Fernandez - Matias - ./fotos/4_Matias.jfif
+4 - Fernandez - Matias - ./fotos/4_Matias.jfif
+4 - Velazquez - Carlos - ./fotos/4_Carlos.jpg
+5 - Rondón - Salomon - ./fotos/5_Salomon.jpg
+6 - Suazo - Chupete - ./fotos/6_Chupete.jfif
