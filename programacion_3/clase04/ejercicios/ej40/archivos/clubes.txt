@@ -1,0 +1,5 @@
+./socios/boca.jpg
+./socios/colocolo.jpg
+./socios/fluminense.png
+./socios/nacional.png
+./socios/olimpia.png
