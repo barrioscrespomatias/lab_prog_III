@@ -1,0 +1,11 @@
+Namespace Manejador
+{
+funcion CrearAlumno():void
+}
+
+Generar documento HTML para crear alumnos
+
+inputs, button (asociar onclick a la funcion CrearAlumnos) 
+(mostrarlos por consola del navegador y por alert)
+
+

@@ -1,0 +1,7 @@
+Namespace TestPrueba
+{
+Main()--> crear alumnos y mostrarlos por consola
+(en colección -> Array<Persona>)
+
+}
+

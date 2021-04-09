@@ -1,0 +1,9 @@
+Namespace Prueba
+{
+Clase Persona (apellido; nombre; ToString():string)
+(atributos protected; propiedades públicas;)
+
+Clase Alumno (legajo; ToString():string)
+(atributo protected; propiedad pública;)
+}
+
