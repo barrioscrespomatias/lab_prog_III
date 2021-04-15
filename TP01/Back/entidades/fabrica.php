@@ -15,7 +15,7 @@ class Fabrica implements IArchivo
         $this->_cantidadMaxima = 5;
         $this->_razonSocial = $razonSocial;
         $this->_empleados = array();
-    }   
+    }
 
     //Agrega a la fábrica el empleado pasado como parámetro.
     //En caso de poder agregarlo devuelve true.
@@ -30,22 +30,22 @@ class Fabrica implements IArchivo
 
         if ($emp != null && $cantidadInicialEmpleados < $this->_cantidadMaxima) {
             // if (!$this->EmpleadoExiste($emp)) {
-                array_push($this->_empleados, $emp);
-                $cantidadActualEmpleados = count($this->_empleados);
-                if ($cantidadInicialEmpleados < $cantidadActualEmpleados) {
-                    $this->EliminarEmpleadosRepetidos();
-                    if (count($this->_empleados) > $cantidadInicialEmpleados)
-                        $retorno = true;
-                    else
-                        echo "Se eliminó el registro repetido de " . $emp->GetNombre() . "<br>";
-                }
+            array_push($this->_empleados, $emp);
+            $cantidadActualEmpleados = count($this->_empleados);
+            if ($cantidadInicialEmpleados < $cantidadActualEmpleados) {
+                $this->EliminarEmpleadosRepetidos();
+                if (count($this->_empleados) > $cantidadInicialEmpleados)
+                    $retorno = true;
+                else
+                    echo "Se eliminó el registro repetido de " . $emp->GetNombre() . "<br>";
+            }
             // } 
             else
                 echo ("No se pudo agregar al empleado.\n");
 
             if ($retorno)
                 $this->EliminarEmpleadosRepetidos();
-        }           
+        }
 
         return $retorno;
     }
@@ -121,6 +121,7 @@ class Fabrica implements IArchivo
         $archivo = fopen($nombreArchivo, "w");
         $contadorEmpleadosGuardados = 0;
         foreach ($this->_empleados as $item) {
+            //Aca tengo que guardar el empleado con su path.
             fwrite($archivo, $item->ToString() . "\r\n");
             $contadorEmpleadosGuardados++;
         }
@@ -145,8 +146,8 @@ class Fabrica implements IArchivo
             $renglon = fgets($archivo);
             $empleado = explode("-", $renglon);
             if ($empleado[0] != NULL) {
-                $variableTipoEmpleado = new Empleado($empleado[0], $empleado[1], $empleado[2], $empleado[3], $empleado[4], $empleado[5], trim($empleado[6]));
-
+                $variableTipoEmpleado = new Empleado($empleado[0], $empleado[1], $empleado[2], $empleado[3], $empleado[4], $empleado[5], $empleado[6]);
+                $variableTipoEmpleado->SetPathFoto($empleado[7]."-".$empleado[8]);
                 if ($this->AgregarEmpleado($variableTipoEmpleado))
                     $contador++;
             }
@@ -155,9 +156,19 @@ class Fabrica implements IArchivo
         if ($cantidadAnteriorEmpleados + $contador == $cantidadActualDeEmpleados);
         echo "Se han traído todos los empleados del archivo<br>";
     }
+
+    //Hace públicos los empleados.
+    public function GetEmpleados(): array
+    {
+        return $this->_empleados;
+    }
+
+
+
+
     /* #endregion */
 
-     /* #region  FUNCIONES PROPIAS */
+    /* #region  FUNCIONES PROPIAS */
 
     // Setea la cantidad máxima en el numero pasado como parámetro
     public function SetCantidadMaxima($cantidad)
@@ -172,14 +183,12 @@ class Fabrica implements IArchivo
     {
         $retorno = false;
         foreach ($this->_empleados as $item) {
-            if ($item->GetLegajo() == $emp->GetLegajo())
-            {
+            if ($item->GetLegajo() == $emp->GetLegajo()) {
                 $retorno = true;
                 break;
-            }                
+            }
         }
         return $retorno;
     }
     /* #endregion */
-
 }

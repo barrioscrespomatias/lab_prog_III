@@ -1,6 +1,8 @@
 <?php
-include_once '../parte_01/entidades/empleado.php';
-include_once '../parte_01/entidades/fabrica.php';
+include_once './entidades/empleado.php';
+include_once './entidades/fabrica.php';
+
+include_once 'validarSesion.php';
 
 $fabrica = new Fabrica("La fabriquita");
 
@@ -42,12 +44,12 @@ echo "<hr>Prueba de la fábrica<br>";
 // echo $fabrica->ToString();
 
 // $fabrica->GuardarEnArchivo('empleados.txt');
-$fabrica->TraerDeArchivo('../parte_03/archivos/empleados.txt');
-
-
-
-echo "Ahora los empleados deberian estar duplicados!<br><br>";
+$fabrica->TraerDeArchivo('./archivos/empleados.txt');
 echo $fabrica->ToString();
-
-
 ?>
+
+<tr>
+    <td>
+        <a href="cerrarSesion.php"><h2>Cerrar sesión</h2></a>
+    </td>
+</tr>

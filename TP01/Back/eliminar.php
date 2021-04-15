@@ -1,6 +1,6 @@
 <?php
 
-include_once '../parte_01/entidades/fabrica.php';
+include_once './entidades/fabrica.php';
 
 $legajo = isset($_GET["legajo"]) ? $_GET["legajo"] : "Error, el legajo no coincide.";
 $nombre = isset($_GET["nombre"]) ? $_GET["nombre"] : "Error, el nombre no coincide.";
@@ -28,7 +28,7 @@ if ($legajo) {
                 if ($fabrica->EliminarEmpleado($empleadoEliminado)) {
                     $fabrica->GuardarEnArchivo($path);
                     echo "Se ha eliminado al empleado " . $empleadoEliminado->GetNombre() . ", legajo numero " . $empleadoEliminado->GetLegajo() . "<br>";
-                    echo "<br><td><a href='../../../TP01/Front/parte_02/index.html'>Volver al inicio</a></td></tr>";
+                    echo "<br><td><a href='../Front/index.html'>Volver al inicio</a></td></tr>";
                     break;
                 } else
                     echo "No se ha eliminado al empleado " . $empleadoEliminado->GetNombre() . ", legajo numero " . $empleadoEliminado->GetLegajo() . " ya que no existia.<br>";
@@ -37,7 +37,7 @@ if ($legajo) {
     }
     if (!$flag) {
         echo "No existe ningun empleado con el legajo {$legajo} y nombre {$nombre}";
-        echo "<br><td><a href='../../../TP01/Front/parte_02/index.html'>Volver al inicio</a></td></tr>";
+        echo "<br><td><a href='../Front/index.html'>Volver al inicio</a></td></tr>";
         echo "<br><td><a href='mostrar.php'>Ir a Mostrar empleados -mostrar.php-</a></td></tr>";
     }
 } else
