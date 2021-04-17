@@ -60,7 +60,7 @@ $fabrica->TraerDeArchivo("./archivos/empleados.txt");
                             <img src='<?php echo$unEmpleado->GetPathFoto() ?>' alt="fotoEmpleado" width="90px" height="90px">
                         </td>
                         <td colspan="3">
-                            <a href='eliminar.php?legajo=<?php echo $unEmpleado->GetLegajo() ?>&nombre=<?php echo $unEmpleado->GetNombre() ?>' name='delete'>Eliminar</a>
+                            <a href='eliminar.php?legajo=<?php echo $unEmpleado->GetLegajo() ?>&nombre=<?php echo $unEmpleado->GetNombre() ?>&pathFoto=<?php echo$unEmpleado->GetPathFoto() ?>' name='delete'>Eliminar</a>
                         </td>                        
                     </tr>
                 <?php } ?>

@@ -39,9 +39,7 @@ abstract class Persona
     //Retorna el valor del atributo nombre.
     public function GetNombre(): string
     {
-        $retorno = "No se ha cargado ningun nombre.\n";
-        if (strlen($this->_nombre) > 0)
-            $retorno = $this->_nombre;
+        $retorno = $this->_nombre;
 
         return $retorno;
     }
@@ -50,7 +48,7 @@ abstract class Persona
     public function GetSexo(): char
     {
         $retorno = '-';
-        if ($this->_sexo === 'm' || $this->_sexo === 'f' || $this->_sexo ==='M' || $this->_sexo ==='F')
+        if ($this->_sexo === 'm' || $this->_sexo === 'f' || $this->_sexo === 'M' || $this->_sexo === 'F')
             $retorno = $this->_nombre;
 
         return $retorno;
@@ -67,8 +65,8 @@ abstract class Persona
         if ($this != null)
             $strSalida .= $this->_nombre . "-" . $this->_apellido . "-" . $this->_dni . "-" . $this->_sexo . "-";
         else
-        $strSalida = "No se pudo mostrar la persona.<br>";
-        
+            $strSalida = "No se pudo mostrar la persona.<br>";
+
         return $strSalida;
     }
 }

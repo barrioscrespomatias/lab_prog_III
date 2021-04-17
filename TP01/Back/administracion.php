@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 include_once './entidades/empleado.php';
 include_once './entidades/fabrica.php';
@@ -14,13 +15,14 @@ $turno = isset($_POST["rdoTurno"]) ? $_POST["rdoTurno"] : "Error";
 
 
 $archivo;
+$banderaFabrica = false;
 $path = './archivos/empleados.txt';
-
 
 $nombreFoto = isset($_FILES['txtFoto']['name']) ? $_FILES['txtFoto']['name'] : "Error";
 $tamanioFoto = isset($_FILES['txtFoto']['size']) ? $_FILES['txtFoto']['size'] : "Error";
 $tmpNameFoto = isset($_FILES['txtFoto']['tmp_name']) ? $_FILES['txtFoto']['tmp_name'] : "Error";
-$array = explode(".", $_FILES['txtFoto']['name']);$extension = end($array);
+$array = explode(".", $_FILES['txtFoto']['name']);
+$extension = end($array);
 $destino = "./fotos/" . $dni . "-" . $apellido . "." . $extension;
 $nombreFotoSinExtension = pathinfo($nombreFoto, PATHINFO_FILENAME);
 
@@ -38,46 +40,49 @@ if ($btnEnviar == "Enviar") {
    // {
    //    echo "<td><a href='../parte_01/index.php'>Volver al inicio</a></td></tr>";    
    // }
-   if ($nombreFoto) {
 
-      $uploadOk = false;
-      switch ($extension) {
-         case "jpg":
-         case "bmp":
-         case "gif":
-         case "png":
-         case "jpeg":
-            //1MB
-            if ($tamanioFoto <= 1000000)
-               $uploadOk = true;
-            break;
-      }
-      if (!$uploadOk)
-         echo "<br>Error al subir el archivo " . $nombreFoto . ". Su tamanio excede lo permitido. Su tamaño es: " . $tamanioFoto . " bytes";
-      else {
-         move_uploaded_file($tmpNameFoto, $destino);
-         echo "<br>Upload correcto " . basename($nombreFotoSinExtension) . ". Extensión " . $extension . ". Tamanio " . $tamanioFoto . "bytes";
-      }
-   }
 
-   if ($nombre){
+   if ($nombre) {
 
       $empleado = new Empleado($nombre, $apellido, $dni, $sexo, $legajo, $sueldo, $turno);
       //Destino se construye mediante $_FILES['name'].
       //$destino = "./fotos/" . $dni . "-" . $apellido . "." . $extension;
-      $empleado->SetPathFoto($destino);   
-
+      $empleado->SetPathFoto($destino);
       $fabrica = new Fabrica("La fabrica");
       $fabrica->SetCantidadMaxima(7);
+
 
       // ---------------------------------Cargar la fábrica--------------------------   
       $fabrica->TraerDeArchivo($path);
       // ---------------------------------Agregar nuevo empleado----------------------
       if ($fabrica->AgregarEmpleado($empleado)) {
          $fabrica->GuardarEnArchivo($path);
+
+         //Guardar la foto.
+         if ($nombreFoto) {
+
+            $uploadOk = false;
+            switch ($extension) {
+               case "jpg":
+               case "bmp":
+               case "gif":
+               case "png":
+               case "jpeg":
+                  //1MB
+                  if ($tamanioFoto <= 1000000)
+                     $uploadOk = true;
+                  break;
+            }
+            if (!$uploadOk)
+               echo "<br>Error al subir el archivo " . $nombreFoto . ". Su tamanio excede lo permitido. Su tamaño es: " . $tamanioFoto . " bytes";
+            else {
+               move_uploaded_file($tmpNameFoto, $destino);
+               echo "<br>Upload correcto " . basename($nombreFotoSinExtension) . ". Extensión " . $extension . ". Tamanio " . $tamanioFoto . "bytes";
+            }
+         }
          echo "<br><td><a href='mostrar.php'>Mostrar la lista de empleados</a></td></tr>";
       } else {
-         echo "<br>" . $empleado->GetNombre() . " ya se encontraba en la fábrica.";
+         echo "<br>No se pudo agregar al empleado {$empleado->Getnombre()}.<br>La fábrica está completa<br>";
          echo "<br><td><a href='../Front/index.html'>Ir a la página principal</a></td></tr>";
       }
    } else {

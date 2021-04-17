@@ -3,6 +3,8 @@
 include_once 'empleado.php';
 include_once 'interfaces.php';
 
+const CANT_ATRIBUTOS = 9;
+
 class Fabrica implements IArchivo
 {
     private $_cantidadMaxima;
@@ -42,9 +44,6 @@ class Fabrica implements IArchivo
             // } 
             else
                 echo ("No se pudo agregar al empleado.\n");
-
-            if ($retorno)
-                $this->EliminarEmpleadosRepetidos();
         }
 
         return $retorno;
@@ -122,8 +121,10 @@ class Fabrica implements IArchivo
         $contadorEmpleadosGuardados = 0;
         foreach ($this->_empleados as $item) {
             //Aca tengo que guardar el empleado con su path.
-            fwrite($archivo, $item->ToString() . "\r\n");
-            $contadorEmpleadosGuardados++;
+            if ($item->GetNombre() != "") {
+                fwrite($archivo, $item->ToString() . "\r\n");
+                $contadorEmpleadosGuardados++;
+            }
         }
         if ($contadorEmpleadosGuardados == count($this->_empleados))
             echo "Se han guardado los empleados en el archivo!!";
@@ -142,19 +143,27 @@ class Fabrica implements IArchivo
         $contador = 0;
 
 
-        while (!feof($archivo)) {
-            $renglon = fgets($archivo);
-            $empleado = explode("-", $renglon);
-            if ($empleado[0] != NULL) {
-                $variableTipoEmpleado = new Empleado($empleado[0], $empleado[1], $empleado[2], $empleado[3], $empleado[4], $empleado[5], $empleado[6]);
-                $variableTipoEmpleado->SetPathFoto($empleado[7]."-".$empleado[8]);
-                if ($this->AgregarEmpleado($variableTipoEmpleado))
-                    $contador++;
+        if ($archivo !== false) {
+            while (!feof($archivo)) {
+                $renglon = fgets($archivo);
+                $cantidad= strlen($renglon);
+
+                //Renglon
+                $empleado = explode("-", $renglon);
+                $cantidad = count($empleado);
+                if ($renglon != false && count($empleado) == CANT_ATRIBUTOS ) {
+                    $variableTipoEmpleado = new Empleado($empleado[0], $empleado[1], $empleado[2], $empleado[3], $empleado[4], $empleado[5], $empleado[6]);
+                    $variableTipoEmpleado->SetPathFoto($empleado[7] . "-" . $empleado[8]);
+                    if ($this->AgregarEmpleado($variableTipoEmpleado))
+                        $contador++;
+                }
             }
+            $cantidadActualDeEmpleados = count($this->_empleados);
+            if ($cantidadAnteriorEmpleados + $contador == $cantidadActualDeEmpleados);
+            echo "Se han obtenido los empleados del archivo de texto.<br>";
         }
-        $cantidadActualDeEmpleados = count($this->_empleados);
-        if ($cantidadAnteriorEmpleados + $contador == $cantidadActualDeEmpleados);
-        echo "Se han traído todos los empleados del archivo<br>";
+        else
+        echo "Todavía no se han cargado empleados<br>";
     }
 
     //Hace públicos los empleados.
