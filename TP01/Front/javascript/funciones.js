@@ -14,9 +14,14 @@ var AdministrarValidaciones = function () {
             console.log("Ok...\n");
         }
         else {
+            //Si el rango numérico no es correcto, modifica el valor del span.
             AdministrarSpanError("txtDniError", !rangoNumericoCorrecto);
             console.log("Error en txt Dni");
         }
+    }
+    else {
+        AdministrarSpanError("txtDniError", true);
+        console.log("Campo DNI vacío");
     }
     /* #endregion */
     /* #region  APELLIDO */
@@ -29,7 +34,7 @@ var AdministrarValidaciones = function () {
     }
     else {
         AdministrarSpanError("txtApellidoError", camposVacios);
-        console.log("Error en txt apellido");
+        console.log("Campo Apellido está vacío");
     }
     /* #endregion */
     /* #region  NOMBRE */
@@ -42,7 +47,7 @@ var AdministrarValidaciones = function () {
     }
     else {
         AdministrarSpanError("txtNombreError", camposVacios);
-        console.log("Error en txt nombre");
+        console.log("Campo Nombre está vacío");
     }
     /* #endregion */
     /* #region  LEGAJO */
@@ -60,6 +65,10 @@ var AdministrarValidaciones = function () {
             AdministrarSpanError("txtLegajoError", !rangoNumericoCorrecto);
             console.log("Error en txt legajo");
         }
+    }
+    else {
+        AdministrarSpanError("txtLegajoError", true);
+        console.log("Campo Legajo está vacío");
     }
     /* #endregion */
     /* #region  SUELDO y TURNO */
@@ -80,6 +89,10 @@ var AdministrarValidaciones = function () {
             console.log("Error en txt sueldo");
         }
     }
+    else {
+        AdministrarSpanError("txtSueldoError", true);
+        console.log("Campo Sueldo está vacío");
+    }
     /* #endregion */
     /* #region  SEXO */
     console.log("Corroborando que el campo Sexo sea correcto");
@@ -91,15 +104,9 @@ var AdministrarValidaciones = function () {
     }
     else {
         AdministrarSpanError("cboSexoError", !comboCorrecto);
-        console.log("Error en combo sexo");
+        console.log("No se ha seleccionado el Sexo");
     }
     /* #endregion */
-    var verificarValidaciones = VerificarValidacionesLogin();
-    if (verificarValidaciones) {
-        retorno = true;
-    }
-    if (!retorno)
-        alert("No se han pasado todas las validaciones");
     /* #region  FOTO */
     console.log("Corroborando que el campo FOTO no se encuentre vac\u00EDo");
     var foto = document.getElementById("txtFoto").value;
@@ -110,9 +117,13 @@ var AdministrarValidaciones = function () {
     }
     else {
         AdministrarSpanError("txtFotoError", camposVacios);
-        console.log("Error en txt foto");
+        console.log("No se ha seleccionado ninguna foto");
     }
     /* #endregion */
+    var verificarValidaciones = VerificarValidacionesLogin();
+    if (verificarValidaciones) {
+        retorno = true;
+    }
     return retorno;
 };
 /* #endregion */
