@@ -33,6 +33,7 @@ $fabrica->TraerDeArchivo("./archivos/empleados.txt");
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../Front/javascript/funciones.js"></script>
     <title>Document</title>
 </head>
 
@@ -53,15 +54,20 @@ $fabrica->TraerDeArchivo("./archivos/empleados.txt");
                 </tr>
                 <?php foreach ($fabrica->GetEmpleados() as $unEmpleado) { ?>
                     <tr>
-                        <td colspan="6">
-                            <?php echo $unEmpleado->ToString()?>
+                        <td colspan="3">
+                            <?php echo $unEmpleado->ToString() ?>
                         </td>
                         <td colspan="3">
-                            <img src='<?php echo$unEmpleado->GetPathFoto() ?>' alt="fotoEmpleado" width="90px" height="90px">
+                            <img src='<?php echo $unEmpleado->GetPathFoto() ?>' alt="fotoEmpleado" width="90px" height="90px">
                         </td>
                         <td colspan="3">
-                            <a href='eliminar.php?legajo=<?php echo $unEmpleado->GetLegajo() ?>&nombre=<?php echo $unEmpleado->GetNombre() ?>&pathFoto=<?php echo$unEmpleado->GetPathFoto() ?>' name='delete'>Eliminar</a>
-                        </td>                        
+                            <a href='eliminar.php?legajo=<?php echo $unEmpleado->GetLegajo() ?>&nombre=<?php echo $unEmpleado->GetNombre() ?>&pathFoto=<?php echo $unEmpleado->GetPathFoto() ?>' name='delete'>Eliminar</a>
+                        </td>
+                        <td colspan="3">
+                            <!-- A onClick del button asociar la funcion AdministrarModificar(), la cual recibe el dni del empleado -->
+                            <input type="button" value="Modificar" onclick="AdministrarModificar('<?php echo $unEmpleado->GetDni() ?>')">
+                            <!-- <input type="button" value="Modificar" onclick="AdministrarModificar()"> -->
+                        </td>
                     </tr>
                 <?php } ?>
                 <tr>
@@ -71,10 +77,23 @@ $fabrica->TraerDeArchivo("./archivos/empleados.txt");
                 </tr>
                 <tr>
                     <td colspan="6">
-                        <a href='../Front/index.html'><h2>Alta de empleados</h2></a>
+                        <a href='../Front/index.html'>
+                            <h2>Alta de empleados</h2>
+                        </a>
                     </td>
                     <td colspan="6">
-                        <a href="cerrarSesion.php"><h2>Cerrar sesión</h2></a>
+                        <a href="cerrarSesion.php">
+                            <h2>Cerrar sesión</h2>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <form action='../Front/index.php' method='POST' id="formularioHidden">
+            <table>
+                <tr>
+                    <td>
+                        <input type="hidden" id="inputHidden" name="inputHidden">
                     </td>
                 </tr>
             </table>

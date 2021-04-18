@@ -4,6 +4,7 @@ include_once './entidades/fabrica.php';
 
 include_once 'validarSesion.php';
 
+
 $fabrica = new Fabrica("La fabriquita");
 
 $idiomas = array("Inglés","Italiano","Chino");

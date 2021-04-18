@@ -1,9 +1,8 @@
 <?php
-
+const CANT_ATRIBUTOS = 9;
 include_once 'empleado.php';
 include_once 'interfaces.php';
 
-const CANT_ATRIBUTOS = 9;
 
 class Fabrica implements IArchivo
 {

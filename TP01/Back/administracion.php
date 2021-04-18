@@ -13,6 +13,7 @@ $legajo = isset($_POST["txtLegajo"]) ? $_POST["txtLegajo"] : "Error";
 $sueldo = isset($_POST["txtSueldo"]) ? $_POST["txtSueldo"] : "Error";
 $turno = isset($_POST["rdoTurno"]) ? $_POST["rdoTurno"] : "Error";
 
+$dniEmpleadoModificado = isset($_POST["hdnModificar"]) ? $_POST["hdnModificar"] : "Error";
 
 $archivo;
 $banderaFabrica = false;
@@ -26,32 +27,18 @@ $extension = end($array);
 $destino = "./fotos/" . $dni . "-" . $apellido . "." . $extension;
 $nombreFotoSinExtension = pathinfo($nombreFoto, PATHINFO_FILENAME);
 
+$fabrica = new Fabrica("La fabrica");
+$fabrica->SetCantidadMaxima(7);
 
-if ($btnEnviar == "Enviar") {
-   // $archivo = fopen($path,"a");
-   // $datosEmpleado = $empleado->ToString();
-   // $cantidadEscrita  = fwrite($archivo,$datosEmpleado."\r\n");
-   // if($cantidadEscrita>0)
-   // {
-   //    echo "Se ha guardado el empleado " . $empleado->GetNombre() . " en el archivo de texto.<br>";
-   //    echo "<td><a href='./mostrar.php'>Ir mostrar</a></td></tr>";
-   // }
-   // else
-   // {
-   //    echo "<td><a href='../parte_01/index.php'>Volver al inicio</a></td></tr>";    
-   // }
 
+switch ($btnEnviar) {   
+   case 'Enviar':
 
    if ($nombre) {
-
       $empleado = new Empleado($nombre, $apellido, $dni, $sexo, $legajo, $sueldo, $turno);
       //Destino se construye mediante $_FILES['name'].
       //$destino = "./fotos/" . $dni . "-" . $apellido . "." . $extension;
       $empleado->SetPathFoto($destino);
-      $fabrica = new Fabrica("La fabrica");
-      $fabrica->SetCantidadMaxima(7);
-
-
       // ---------------------------------Cargar la fábrica--------------------------   
       $fabrica->TraerDeArchivo($path);
       // ---------------------------------Agregar nuevo empleado----------------------
@@ -59,27 +46,9 @@ if ($btnEnviar == "Enviar") {
          $fabrica->GuardarEnArchivo($path);
 
          //Guardar la foto.
-         if ($nombreFoto) {
-
-            $uploadOk = false;
-            switch ($extension) {
-               case "jpg":
-               case "bmp":
-               case "gif":
-               case "png":
-               case "jpeg":
-                  //1MB
-                  if ($tamanioFoto <= 1000000)
-                     $uploadOk = true;
-                  break;
-            }
-            if (!$uploadOk)
-               echo "<br>Error al subir el archivo " . $nombreFoto . ". Su tamanio excede lo permitido. Su tamaño es: " . $tamanioFoto . " bytes";
-            else {
-               move_uploaded_file($tmpNameFoto, $destino);
-               echo "<br>Upload correcto " . basename($nombreFotoSinExtension) . ". Extensión " . $extension . ". Tamanio " . $tamanioFoto . "bytes";
-            }
-         }
+         if ($nombreFoto)
+         GuardarFoto($nombreFoto,$extension,$tamanioFoto,$tmpNameFoto,$destino,$nombreFotoSinExtension);
+         
          echo "<br><td><a href='mostrar.php'>Mostrar la lista de empleados</a></td></tr>";
       } else {
          echo "<br>No se pudo agregar al empleado {$empleado->Getnombre()}.<br>La fábrica está completa<br>";
@@ -87,5 +56,61 @@ if ($btnEnviar == "Enviar") {
       }
    } else {
       header('location: ../Front/index.html');
+   }
+
+   break;
+
+   case "Modificar":
+      $fabrica->TraerDeArchivo($path);
+      $empleadoModificado = BuscarEmpleado($fabrica,$dniEmpleadoModificado);
+      $fabrica->EliminarEmpleado($empleadoModificado);
+      $nuevoEmpleado = new Empleado($nombre,$apellido,$dni,$sexo,$legajo, $sueldo, $turno);
+      $nuevoEmpleado->SetPathFoto($destino);
+      $fabrica->AgregarEmpleado($nuevoEmpleado);
+      $fabrica->GuardarEnArchivo($path);
+      if($nombreFoto)
+      GuardarFoto($nombreFoto,$extension,$tamanioFoto,$tmpNameFoto,$destino,$nombreFotoSinExtension);
+      echo "Se ha modificado el empleado!!";
+
+
+      break;
+}
+
+//Busca dentro de la fábrica por dni
+//El empleado siempre debería estar ya que es un dni que no se puede modificar
+// porque su atributo es input es readOnly.
+
+function BuscarEmpleado ($fabrica, $dni):Empleado{
+   $empleadoEncontrado = array();
+   foreach ($fabrica->GetEmpleados() as $item){
+      if($item->GetDni() == $dni){
+         $empleadoEncontrado = $item;         
+         break;
+      }      
+   }
+   return $empleadoEncontrado;
+}
+
+function GuardarFoto($nombreFoto,$extension, $tamanioFoto, $tmpNameFoto, $destino,$nombreFotoSinExtension){
+   if ($nombreFoto) {
+
+      $uploadOk = false;
+      switch ($extension) {
+         case "jpg":
+         case "bmp":
+         case "gif":
+         case "png":
+         case "jpeg":
+            //1MB
+            if ($tamanioFoto <= 1000000)
+               $uploadOk = true;
+            break;
+      }
+      if (!$uploadOk)
+         echo "<br>Error al subir el archivo " . $nombreFoto . ". Su tamanio excede lo permitido. Su tamaño es: " . $tamanioFoto . " bytes";
+      else {
+         move_uploaded_file($tmpNameFoto, $destino);
+         echo "<br>Upload correcto " . basename($nombreFotoSinExtension) . ". Extensión " . $extension . ". Tamanio " . $tamanioFoto . "bytes";
+      }
    }
 }

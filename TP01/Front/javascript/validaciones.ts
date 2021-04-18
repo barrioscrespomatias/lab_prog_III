@@ -221,6 +221,14 @@ let AdministrarValidacionesLogin: Function = (): void => {
 
 /* #region  FUNCIONES */
 
+let AdministrarModificar:Function = (dniEmpleado:string):void => {
+    (<HTMLInputElement>document.getElementById("inputHidden")).value = dniEmpleado;
+    let formularioHidden:HTMLFormElement = <HTMLFormElement>document.getElementById("formularioHidden"); 
+    formularioHidden.submit();
+    console.log("formularioHidden enviado hacia index.php!!");
+}
+
+
 let campo: HTMLInputElement;
 ///Modifica el display de un valor de un valor tomado desde un ID.
 let AdministrarSpanError: Function = (txt: string, error: boolean): void => {
