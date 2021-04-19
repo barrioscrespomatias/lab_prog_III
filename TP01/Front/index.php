@@ -2,11 +2,9 @@
 
 include_once '../Back/entidades/fabrica.php';
 include_once '../Back/entidades/empleado.php';
-// include_once '../Back/interfaces.php';
-
+include_once '../Back/verificarUsuario.php';
 
 $valorDniEmpleado = isset($_POST['inputHidden']) ? $_POST["inputHidden"] : "Error";
-
 $pathArchivo = '../Back/archivos/empleados.txt';
 
 $fabrica = new Fabrica("La fabriquita");
@@ -20,7 +18,6 @@ if ($indice != -1) {
     //Le reconvierte a su tipo, en este caso a OBJETO EMPLEADO.
     $empleadoAuxiliar =  $arrayEmpleados[$indice];
 }
-
 
 
 function IndiceEmpleado($fabrica, $dniEmpleado): int
@@ -79,7 +76,7 @@ function IndiceEmpleado($fabrica, $dniEmpleado): int
                             <label for="txtDni">DNI:</label>
                         </td>
                         <td colspan="6">
-                            <input type="number" name="txtDni" id="txtDni" max="55000000" min="1000000" readonly value="<?php echo $empleadoAuxiliar->GetDni() ?>">
+                            <input type="number" name="txtDni" id="txtDni" max="55000000" min="1000000" readonly value="<?php echo trim($empleadoAuxiliar->GetDni())?>">
                             <span style="display: none;" id="txtDniError">*</span>
                         </td>
                     </tr>
@@ -88,7 +85,7 @@ function IndiceEmpleado($fabrica, $dniEmpleado): int
                             <label for="txtApellido">Apellido:</label>
                         </td>
                         <td colspan="3">
-                            <input type="text" name="txtApellido" id="txtApellido" value="<?php echo $empleadoAuxiliar->GetApellido() ?>">
+                            <input type="text" name="txtApellido" id="txtApellido" value="<?php echo trim($empleadoAuxiliar->GetApellido()) ?>">
                             <span style="display: none;" id="txtApellidoError">*</span>
                         </td>
                     </tr>
@@ -97,7 +94,7 @@ function IndiceEmpleado($fabrica, $dniEmpleado): int
                             <label for="txtNombre">Nombre:</label>
                         </td>
                         <td colspan="3">
-                            <input type="text" name="txtNombre" id="txtNombre" value=" <?php echo $empleadoAuxiliar->GetNombre() ?> ">
+                            <input type="text" name="txtNombre" id="txtNombre" value="<?php echo trim($empleadoAuxiliar->GetNombre())?>">
                             <span style="display: none;" id="txtNombreError">*</span>
                         </td>
                     </tr>
@@ -130,7 +127,7 @@ function IndiceEmpleado($fabrica, $dniEmpleado): int
                             <label for="txtLegajo">Legajo:</label>
                         </td>
                         <td colspan="3">
-                            <input type="number" id="txtLegajo" name="txtLegajo" min="100" max="550" readonly value="<?php echo $empleadoAuxiliar->GetLegajo() ?>">
+                            <input type="number" id="txtLegajo" name="txtLegajo" min="100" max="550" readonly value="<?php echo trim($empleadoAuxiliar->GetLegajo()) ?>">
                             <span style="display: none;" id="txtLegajoError">*</span>
                         </td>
                     </tr>
@@ -139,7 +136,7 @@ function IndiceEmpleado($fabrica, $dniEmpleado): int
                             <label for="txtSueldo">Sueldo:</label>
                         </td>
                         <td colspan="6">
-                            <input type="number" name="txtSueldo" id="txtSueldo" min="8000" max="25000" step="500" value="<?php echo $empleadoAuxiliar->GetSueldo() ?>">
+                            <input type="number" name="txtSueldo" id="txtSueldo" min="8000" max="25000" step="500" value="<?php echo trim($empleadoAuxiliar->GetSueldo()) ?>">
                             <span style="display: none;" id="txtSueldoError">*</span>
                         </td>
                     </tr>
@@ -180,7 +177,7 @@ function IndiceEmpleado($fabrica, $dniEmpleado): int
                             <label for="txtFoto">Foto:</label>
                         </td>
                         <td colspan="6">
-                            <input type="file" name="txtFoto" id="txtFoto" value="<?php echo $empleadoAuxiliar->GetPathFoto() ?>">
+                            <input type="file" name="txtFoto" id="txtFoto" value="<?php echo trim($empleadoAuxiliar->GetPathFoto()) ?>">
                             <span style="display: none;" id="txtFotoError">*</span>
                         </td>
                     </tr>
@@ -201,7 +198,7 @@ function IndiceEmpleado($fabrica, $dniEmpleado): int
                     </tr>
                     <tr>
                         <td>
-                            <input type="hidden" name="hdnModificar" value="<?php echo $empleadoAuxiliar->GetDni()?>">
+                            <input type="hidden" name="hdnModificar" value="<?php echo trim($empleadoAuxiliar->GetDni())?>">
                         </td>
                     </tr>
                 </tbody>

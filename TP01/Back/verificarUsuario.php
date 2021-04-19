@@ -1,9 +1,10 @@
 <?php
 
 session_start();
+ 
 
-include './entidades/empleado.php';
-include './entidades/fabrica.php';
+// include_once './entidades/empleado.php';
+// include_once './entidades/fabrica.php';
 
 $btnEnviar = isset($_POST['btnEnviar']) ? $_POST['btnEnviar'] : "Error";
 $dni = isset($_POST['txtDni']) ? $_POST['txtDni'] : "Error";

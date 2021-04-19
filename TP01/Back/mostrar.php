@@ -1,6 +1,6 @@
 <?php
 
-include './entidades/empleado.php';
+include_once './entidades/empleado.php';
 include_once './entidades/fabrica.php';
 include_once 'validarSesion.php';
 
@@ -39,8 +39,7 @@ $fabrica->TraerDeArchivo("./archivos/empleados.txt");
 
 <body>
     <div class="container">
-        <h2>Listado de empleados</h2>
-        <form action="">
+        <h2>Listado de empleados</h2>       
             <table align="center">
                 <thead>
                     <th colspan="12">
@@ -88,7 +87,7 @@ $fabrica->TraerDeArchivo("./archivos/empleados.txt");
                     </td>
                 </tr>
             </table>
-        </form>
+        
         <form action='../Front/index.php' method='POST' id="formularioHidden">
             <table>
                 <tr>
