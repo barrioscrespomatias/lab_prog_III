@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="ajax.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+
+    <table>
+        <tr>
+            <td colspan="4">
+                <label for="nombre">Nombre:</label>
+            </td>
+            <td colspan="4">
+                <input type="text" name="nombre" id="nombre">
+            </td>
+            <td colspan="4">
+                <input type="button" value="Enviar nombre" onclick="TestAjax.AjaxNombre()">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <label for="apellido">Apellido:</label>
+            </td>
+            <td colspan="4">
+                <input type="text" name="apellido" id="apellido">
+            </td>
+            <td colspan="4">
+                <input type="button" value="Enviar apellido" onclick="TestAjax.AjaxApellido()">
+            </td>
+        </tr>
+    </table>
+
+
+
+
+    <div style="background-color: rgb(121, 211, 238);">
+        <p id="divNombre">No se ha cargado el nombre</p>
+    </div>
+
+    <div style="background-color: rgb(121, 211, 238);">
+        <p id="divApellido">No se ha cargado el apellido</p>
+    </div>
+    <div>
+        <input type="file" name="foto" id="foto">
+        <input type="button" value="CambiarFoto" onclick="TestAjax.SubirFoto()" style=display:block>
+    </div>
+    <div>
+        <img src="usr_default.jpg" alt="foto_perfil" id="imgFoto" width="125px" height="125px">
+    </div>
+
+
+</body>
+
+</html>
