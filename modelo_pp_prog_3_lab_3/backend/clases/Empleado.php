@@ -60,11 +60,11 @@ class Empleado extends Usuario implements ICRUD
 
         // Convertir la consulta en un array de empleados.
         foreach ($consulta as $item) {
-            // array_push($listaEmpleados,$item);
-            var_dump($item);
+            array_push($listaEmpleados,$item);
+            // var_dump($item);
         }
 
-        die();
+      
         return $listaEmpleados;
     }
 
