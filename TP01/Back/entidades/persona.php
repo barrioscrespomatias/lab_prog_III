@@ -2,17 +2,18 @@
 
 abstract class Persona
 {
-    private $_apellido;
-    private $_dni;
-    private $_nombre;
-    private $_sexo;
+    public $apellido;
+    public $dni;
+    public $nombre;
+    public $sexo;
 
     public function __construct($nombre, $apellido, $dni, $sexo)
+    // public function __construct()
     {
-        $this->_nombre = $nombre;
-        $this->_apellido = $apellido;
-        $this->_dni = $dni;
-        $this->_sexo = $sexo;
+        $this->nombre = $nombre;
+        $this->apellido = $apellido;
+        $this->dni = $dni;
+        $this->sexo = $sexo;
     }
 
     /* #region  METODOS GETTERS */
@@ -20,8 +21,8 @@ abstract class Persona
     public function GetApellido(): string
     {
         $retorno = "No se ha cargado ningun apellido.\n";
-        if (strlen($this->_apellido) > 0)
-            $retorno = $this->_apellido;
+        if (strlen($this->apellido) > 0)
+            $retorno = $this->apellido;
 
         return $retorno;
     }
@@ -30,8 +31,8 @@ abstract class Persona
     public function GetDni(): int
     {
         $retorno = -1;
-        if ($this->_dni > 0 && $this->_dni < 100000000)
-            $retorno = $this->_dni;
+        if ($this->dni > 0 && $this->dni < 100000000)
+            $retorno = $this->dni;
 
         return $retorno;
     }
@@ -39,17 +40,17 @@ abstract class Persona
     //Retorna el valor del atributo nombre.
     public function GetNombre(): string
     {
-        $retorno = $this->_nombre;
+        $retorno = $this->nombre;
 
         return $retorno;
     }
 
     //Retorna el valor el atributo sexo.
-    public function GetSexo(): char
+    public function GetSexo(): string
     {
         $retorno = '-';
-        if ($this->_sexo === 'm' || $this->_sexo === 'f' || $this->_sexo === 'M' || $this->_sexo === 'F')
-            $retorno = $this->_nombre;
+        if ($this->sexo === 'm' || $this->sexo === 'f' || $this->sexo === 'M' || $this->sexo === 'F')
+            $retorno = $this->sexo;
 
         return $retorno;
     }
@@ -63,7 +64,7 @@ abstract class Persona
     {
         $strSalida = "";
         if ($this != null)
-            $strSalida .= $this->_nombre . "-" . $this->_apellido . "-" . $this->_dni . "-" . $this->_sexo . "-";
+            $strSalida .= $this->nombre . "-" . $this->apellido . "-" . $this->dni . "-" . $this->sexo . "-";
         else
             $strSalida = "No se pudo mostrar la persona.<br>";
 

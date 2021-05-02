@@ -6,7 +6,7 @@ namespace Manejador{
         let legajo:number = (Number)((<HTMLInputElement>document.getElementById("legajo")).value);
 
         let alumno:Prueba.Alumno = new Prueba.Alumno(nombre,apellido,legajo);
-        alert(alumno.ToString());        
+        alert("Manejador de TypeScritp\n"+alumno.ToString());        
     }
 
 

@@ -29,7 +29,6 @@ namespace Prueba {
 
         /* #endregion */
 
-
         public ToString(): string {
             return this.nombre + ", " + this.apellido;
         }

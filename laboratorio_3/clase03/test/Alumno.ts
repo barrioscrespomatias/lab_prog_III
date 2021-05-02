@@ -19,7 +19,6 @@ namespace Prueba {
         }
         /* #endregion */
 
-
         public ToString(): string {
             let datos: string = "";
             datos += super.ToString();

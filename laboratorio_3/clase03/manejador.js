@@ -77,6 +77,6 @@ var Manejador;
         var apellido = document.getElementById("apellido").value;
         var legajo = (Number)(document.getElementById("legajo").value);
         var alumno = new Prueba.Alumno(nombre, apellido, legajo);
-        alert(alumno.ToString()+"ok");
+        alert("Manejador de TypeScritp\n" + alumno.ToString());
     };
 })(Manejador || (Manejador = {}));

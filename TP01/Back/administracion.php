@@ -15,6 +15,10 @@ $sueldo = isset($_POST["txtSueldo"]) ? $_POST["txtSueldo"] : "Error";
 $turno = isset($_POST["rdoTurno"]) ? $_POST["rdoTurno"] : "Error";
 /* #endregion */
 
+die();
+
+
+
 /* #region  Datos del archivo */
 $nombreFoto = isset($_FILES['txtFoto']['name']) ? $_FILES['txtFoto']['name'] : "Error";
 $tamanioFoto = isset($_FILES['txtFoto']['size']) ? $_FILES['txtFoto']['size'] : "Error";
@@ -34,7 +38,6 @@ $path = './archivos/empleados.txt';
 $fabrica = new Fabrica("La fabrica");
 $fabrica->SetCantidadMaxima(7);
 
-
 switch ($btnEnviar) {
 
    case 'Enviar':
@@ -42,6 +45,7 @@ switch ($btnEnviar) {
          $empleado = new Empleado($nombre, $apellido, $dni, $sexo, $legajo, $sueldo, $turno);
          //Destino se construye mediante $_FILES['name'].
          //$destino = "./fotos/" . $dni . "-" . $apellido . "." . $extension;
+
          $empleado->SetPathFoto($destino);
          // ---------------------------------Cargar la fábrica--------------------------   
          $fabrica->TraerDeArchivo($path);

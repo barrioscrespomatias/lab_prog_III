@@ -5,13 +5,23 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Listen for Xdebug",
+            "type": "php",
+            "request": "launch",
+            "port": 9003
+        },
+
+        {
             "type": "pwa-node",
             "request": "launch",
             "name": "Launch Program",
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\laboratorio_3\\TP01\\javascript\\validaciones.ts",
+            // "program": "${workspaceFolder}\\laboratorio_3\\clase03\\test\\final.js",
+            // "program": "${workspaceFolder}\\laboratorio_3\\clase03\\manejador.js",
+            // "program": "${workspaceFolder}\\TP01\\Front\\parte_04\\validaciones.js",
+            "program": "${workspaceFolder}\\laboratorio_3\\clase04\\ejercicios\\ej08\\ej08.js",
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
             ]

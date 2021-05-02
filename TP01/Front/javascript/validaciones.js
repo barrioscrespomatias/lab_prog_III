@@ -173,6 +173,12 @@ var AdministrarValidacionesLogin = function () {
 };
 /* #endregion */
 /* #region  FUNCIONES */
+var AdministrarModificar = function (dniEmpleado) {
+    document.getElementById("inputHidden").value = dniEmpleado;
+    var formularioHidden = document.getElementById("formularioHidden");
+    formularioHidden.submit();
+    console.log("formularioHidden enviado hacia index.php!!");
+};
 var campo;
 ///Modifica el display de un valor de un valor tomado desde un ID.
 var AdministrarSpanError = function (txt, error) {

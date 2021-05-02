@@ -4,20 +4,44 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="./test/manejador.js"></script>
+    <script src="manejador.js"></script>
     <title>Document</title>
 </head>
 <body>
-    <label for="nombre">Ingrese nombre: </label>
-    <input type="text" name="nombre" id="nombre">
-
-    <label for="apellido">Ingrese apellido</label>
-    <input type="text" name="apellido" id="apellido">
-
-    <label for="legajo">Ingrese legajo</label>
-    <input type="text" name="legajo" id="legajo">
-
-    <input type="button" value="Agregar" onclick="Manejador.CrearAlumno()" >
+    <table> 
+        <tr>
+            <td>
+                <label for="nombre">Ingrese nombre: </label>
+            </td>
+            <td>
+                <input type="text" name="nombre" id="nombre">
+            </td>            
+        </tr>
+        
+        <tr>
+            <td>
+                <label for="apellido">Ingrese apellido</label>
+            </td>
+            <td>
+                <input type="text" name="apellido" id="apellido">
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                <label for="legajo">Ingrese legajo</label>
+            </td>
+            <td>
+                <input type="text" name="legajo" id="legajo">
+            </td>
+        </tr>
+        <tr>
+          <td>
+            <input type="button" value="Agregar" onclick="Manejador.CrearAlumno()">
+          </td>  
+        </tr>        
     
+        
+    </table>
 </body>
 </html>
