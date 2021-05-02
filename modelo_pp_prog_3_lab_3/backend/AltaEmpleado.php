@@ -15,18 +15,9 @@ $fotoGuardada = Empleado::GuardarFoto(
 );
 
 if ($fotoGuardada) {
-    $employee = new Empleado(
-        $empleadoStd->nombre,
-        $empleadoStd->correo,
-        $empleadoStd->clave,
-        $empleadoStd->id_perfil,
-        $fotoStd->path,
-        $empleadoStd->sueldo
-    );
-
-
-
-    $altaEmpleado=$employee->Agregar();
+    $employee = Empleado::ToEmpleadoClass($empleadoStd);
+    //Agrgar a la DB
+    $altaEmpleado = $employee->Agregar();
     //No olvidarme del echo.    
-    echo Empleado::Mensaje($altaEmpleado,"Se ha dado de alta a un nuevo empleado!","Error al dar de alta. Corrobore los datos!");
+    echo Empleado::Mensaje($altaEmpleado, "Se ha dado de alta a un nuevo empleado!", "Error al dar de alta. Corrobore los datos!");
 }

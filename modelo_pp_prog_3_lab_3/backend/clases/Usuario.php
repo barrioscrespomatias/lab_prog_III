@@ -15,17 +15,13 @@
         /**
          * Constructor con id_perfil por defecto.
          */
-        public function __construct(            
-            $nombre = "",
-            $correo = "",
-            $clave = "",
-            $id_perfil = 2
-        ) {
+        public function __construct($id="",$nombre = "",$correo = "",$clave = "",$id_perfil = 2,$perfil=""){
+            $this->id=$id;
             $this->nombre = $nombre;
             $this->correo = $correo;
             $this->clave = $clave;
             $this->id_perfil = $id_perfil;
-            $this->perfil = "";
+            $this->perfil = $perfil;
         }
 
         /**
@@ -137,11 +133,19 @@
             ON $tablaUno.id_perfil = $tablaDos.id");
 
             $consulta->execute();
-            $consulta->setFetchMode(PDO::FETCH_INTO, new Usuario);
 
-            foreach ($consulta as $item) {
-                array_push($listaUsuarios, $item);
+            while($fila = $consulta->fetch(PDO::FETCH_OBJ)){
+                $empleado = new Usuario($fila->id,
+                                       $fila->nombre,
+                                       $fila->correo,
+                                       $fila->clave,
+                                       $fila->id_perfil,
+                                       $fila->perfil);
+
+                array_push($listaUsuarios,$empleado);
             }
+
+            
 
             return $listaUsuarios;
         }

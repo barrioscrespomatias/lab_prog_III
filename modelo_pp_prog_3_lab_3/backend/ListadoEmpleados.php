@@ -39,7 +39,7 @@ function FormularTabla($arrayDeEmpleados): string
                 <td>' . $item->clave . '</td>
                 <td>' . $item->perfil . '</td>                
                 <td>' . $item->sueldo . '</td>
-                <td>' . $item->foto . '</td>
+                <td> <img src="$item->foto" alt="img_empleado" width="50px" heigth="50px"></td>
             </tr>';
     }
     $tabla.= 

@@ -1,4 +1,7 @@
 <?php
+
+use Empleado as GlobalEmpleado;
+
 include_once 'Usuario.php';
 include_once 'ICRUD.php';
 
@@ -9,15 +12,9 @@ class Empleado extends Usuario implements ICRUD
     public $foto;
     public $sueldo;
 
-    public function __construct(
-        $nombre = "",
-        $correo = "",
-        $clave = "",
-        $id_perfil = "",
-        $foto = "",
-        $sueldo = 0
-    ) {
-        parent::__construct($nombre, $correo, $clave, $id_perfil);
+    public function __construct($id="",$nombre = "", $correo = "", $clave = "", $id_perfil = "",$perfil="", $foto = "", $sueldo = 0)
+    {
+        parent::__construct($id,$nombre, $correo, $clave, $id_perfil,$perfil);
         $this->foto = $foto;
         $this->sueldo = $sueldo;
     }
@@ -35,33 +32,27 @@ class Empleado extends Usuario implements ICRUD
         $tablaUno = 'empleados';
         $tablaDos = 'perfiles';
 
-        $consulta = $objetoAccesoDatos->RetornarConsulta("SELECT $tablaUno.id, $tablaUno.nombre, $tablaUno.correo,$tablaUno.clave,$tablaDos.descripcion AS perfil,$tablaUno.id_perfil,$tablaUno.foto,$tablaUno.sueldo
+        $consulta = $objetoAccesoDatos->RetornarConsulta("SELECT $tablaUno.id,$tablaUno.nombre,
+        $tablaUno.correo,$tablaUno.clave,$tablaDos.descripcion AS perfil,$tablaUno.id_perfil,$tablaUno.foto,
+        $tablaUno.sueldo
+
         FROM $tablaUno
         INNER JOIN $tablaDos
         ON $tablaUno.id_perfil = $tablaDos.id");
 
 
         $consulta->execute();
-        $consulta->setFetchMode(PDO::FETCH_INTO, new Empleado);
+        while($fila = $consulta->fetch(PDO::FETCH_OBJ)){
+            $empleado = new Empleado($fila->id,
+                                   $fila->nombre,
+                                   $fila->correo,
+                                   $fila->clave,
+                                   $fila->id_perfil,
+                                   $fila->perfil,
+                                   $fila->foto,
+                                   $fila->sueldo);
 
-        // while($fila = $consulta->fetch(PDO::FETCH_OBJ)){
-        //     $empleado = new Empleado($fila->id,
-        //                            $fila->nombre,
-        //                            $fila->correo,
-        //                            $fila->clave,
-        //                            $fila->id_perfil,
-        //                            $fila->perfil,
-        //                            $fila->foto,
-        //                            $fila->sueldo);
-
-        //     array_push($listaEmpleados,$empleado);
-        // }
-
-
-        // Convertir la consulta en un array de empleados.
-        foreach ($consulta as $item) {
-            array_push($listaEmpleados,$item);
-            // var_dump($item);
+            array_push($listaEmpleados,$empleado);
         }
 
       
@@ -262,5 +253,20 @@ class Empleado extends Usuario implements ICRUD
             }
         }
         return $uploadOk;
+    }
+
+    public static function ToEmpleadoClass($empleadoStd): Empleado
+    {
+        $user = new Usuario();
+
+        $user->id = $empleadoStd->id;
+        $user->nombre = $empleadoStd->nombre;
+        $user->correo = $empleadoStd->correo;
+        $user->clave = $empleadoStd->clave;
+        $user->id_perfil = $empleadoStd->id_perfil;
+        $user->sueldo = $empleadoStd->sueldo;
+        $user->foto = $empleadoStd->foto;
+
+        return $user;
     }
 }

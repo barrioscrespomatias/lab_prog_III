@@ -9,7 +9,7 @@ $empleadoStd = json_decode($empleado_json);
 $fotoStd = Empleado::CapturarFoto('foto', $empleadoStd->nombre, '../backend/empleados/fotos/');
 
 if ($fotoStd->exito) {
-    $empleadoClass = new Empleado(        
+    $empleadoClass = new Empleado(
         $empleadoStd->nombre,
         $empleadoStd->correo,
         $empleadoStd->clave,
@@ -18,21 +18,9 @@ if ($fotoStd->exito) {
         $fotoStd->path,
         $empleadoStd->sueldo
     );
-} else {
-    $empleadoClass = new Empleado(        
-        $empleadoStd->nombre,
-        $empleadoStd->correo,
-        $empleadoStd->clave,
-        $empleadoStd->id_perfil,
-        $empleadoStd->pathFoto,
-        $empleadoStd->sueldo
-    );
-}
-//Cargar el ID anterior para que los mantenga.
-$empleadoClass->id = $empleadoStd->id;
+} else
+    $empleadoClass = Empleado::ToEmpleadoClass($empleadoStd);
 
 //Cargar en DB
 $modificado = $empleadoClass->Modificar($empleadoClass->id);
-echo Empleado::Mensaje($modificado,"Se ha modificado al empleado!","No se ha modificado. Corrobore los datos!!");
-
-
+echo Empleado::Mensaje($modificado, "Se ha modificado al empleado!", "No se ha modificado. Corrobore los datos!!");
