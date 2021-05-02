@@ -22,6 +22,8 @@ class Empleado extends Usuario implements ICRUD
         $this->sueldo = $sueldo;
     }
 
+
+
     //Retorna un array de EMPLEADOS desde la DB con la descripcion
     //del perfil y su foto.
 
@@ -29,14 +31,50 @@ class Empleado extends Usuario implements ICRUD
     {
         $listaEmpleados = array();
 
+        $objetoAccesoDatos = AccesoDatos::RetornarObjetoAcceso();
+        $tablaUno = 'empleados';
+        $tablaDos = 'perfiles';
+
+        $consulta = $objetoAccesoDatos->RetornarConsulta("SELECT $tablaUno.id, $tablaUno.nombre, $tablaUno.correo,$tablaUno.clave,$tablaDos.descripcion AS perfil,$tablaUno.id_perfil,$tablaUno.foto,$tablaUno.sueldo
+        FROM $tablaUno
+        INNER JOIN $tablaDos
+        ON $tablaUno.id_perfil = $tablaDos.id");
 
 
+        $consulta->execute();
+        $consulta->setFetchMode(PDO::FETCH_INTO, new Empleado);
+
+        // while($fila = $consulta->fetch(PDO::FETCH_OBJ)){
+        //     $empleado = new Empleado($fila->id,
+        //                            $fila->nombre,
+        //                            $fila->correo,
+        //                            $fila->clave,
+        //                            $fila->id_perfil,
+        //                            $fila->perfil,
+        //                            $fila->foto,
+        //                            $fila->sueldo);
+
+        //     array_push($listaEmpleados,$empleado);
+        // }
+
+
+        // Convertir la consulta en un array de empleados.
+        foreach ($consulta as $item) {
+            // array_push($listaEmpleados,$item);
+            var_dump($item);
+        }
+
+        die();
         return $listaEmpleados;
     }
 
 
+
+
+
+
     //A partir de la instancia actual, agrega un nuevo registro en la DB
-    //TABLA EMPLEADOS. Si pudo agregar retorna TRUE.        
+    //TABLA EMPLEADOS. Si pudo agregar retorna TRUE.
     public function Agregar(): bool
     {
 
@@ -46,7 +84,7 @@ class Empleado extends Usuario implements ICRUD
         $consulta = $objetoAccesoDato->RetornarConsulta("INSERT INTO empleados (nombre,correo,clave,id_perfil,foto,sueldo)"
             . " VALUES(:nombre, :correo, :clave, :id_perfil, :foto, :sueldo)");
 
-        //bindValue asocia un valor con la clave del insert.        
+        //bindValue asocia un valor con la clave del insert.
         $consulta->bindValue(':nombre', $this->nombre, PDO::PARAM_STR);
         $consulta->bindValue(':correo', $this->correo, PDO::PARAM_STR);
         $consulta->bindValue(':clave', $this->clave, PDO::PARAM_STR);
@@ -99,27 +137,30 @@ class Empleado extends Usuario implements ICRUD
 
         $consulta->bindValue(':id', $id, PDO::PARAM_INT);
 
-        $retorno = $consulta->execute();
+        $consulta->execute();
 
+        $eliminado = $consulta->rowCount();
+        if($eliminado>0)
+        $retorno=true;
 
         return $retorno;
     }
     /**
      * Guarda las fotos mediante en la direccion pasada como parámetro.
-     * Necesita el Name del HTML, nombre del empleado y la direccion.
+     * Necesita el Name del HTML, nombre del empleado y la ruta de carpetas ../backend/empleado/fotos.
      * Retorna un stdClass con los datos de la foto y un booleano con true o false.
      */
-    public static function CapturarFoto($htmlName, $nombreEmpleado, $direccion): stdClass
+    public static function CapturarFoto($htmlName, $nombreEmpleado, $rutaCarpetaFotos): stdClass
     {
 
         $retorno = new stdClass();
         $retorno->exito = false;
 
-        if (isset($_FILES['foto'])) {
+        if (isset($_FILES[$htmlName])) {
 
-            $nombreFoto = isset($_FILES[$htmlName]['name']) ? $_FILES[$htmlName]['name'] : "Error";
-            $tamanioFoto = isset($_FILES[$htmlName]['size']) ? $_FILES[$htmlName]['size'] : "Error";
-            $tmpNombreFoto = isset($_FILES[$htmlName]['tmp_name']) ? $_FILES[$htmlName]['tmp_name'] : "Error";
+            $nombreFoto = isset($_FILES[$htmlName]['name']) ? $_FILES[$htmlName]['name'] : null;
+            $tamanioFoto = isset($_FILES[$htmlName]['size']) ? $_FILES[$htmlName]['size'] : null;
+            $tmpNombreFoto = isset($_FILES[$htmlName]['tmp_name']) ? $_FILES[$htmlName]['tmp_name'] : null;
             $array = explode(".", $_FILES[$htmlName]['name']);
             $extension = end($array);
             $nombreFotoSinExtension = pathinfo($nombreFoto, PATHINFO_FILENAME);
@@ -127,9 +168,9 @@ class Empleado extends Usuario implements ICRUD
             $horaGuardado = date("his");
 
             //PATH MODIFICABLE -> NombreEmpleado.Hora.Extension
-            $pathFoto =  $direccion . $nombreEmpleado . "." . "$horaGuardado" . "." . $extension;
+            $pathFoto =  $rutaCarpetaFotos . $nombreEmpleado . "." . "$horaGuardado" . "." . $extension;
 
-            
+
             $retorno->nombre = $nombreFoto;
             $retorno->tamanio = $tamanioFoto;
             $retorno->extension = $extension;
@@ -175,51 +216,51 @@ class Empleado extends Usuario implements ICRUD
         return $retorno;
     }
 
-/**
- * Toma cualquier tipo de dato por GET o POST.
- */
-public static function TomarDato($htmlName, $metodo)
-{
-    $dato = "";
-    switch ($metodo) {
-        case '$_POST':
-            $dato = isset($_POST[$htmlName]) ? $_POST[$htmlName] : null;
-            break;
+    /**
+     * Toma cualquier tipo de dato por GET o POST.
+     */
+    public static function TomarDato($htmlName, $metodo)
+    {
+        $dato = "";
+        switch ($metodo) {
+            case '$_POST':
+                $dato = isset($_POST[$htmlName]) ? $_POST[$htmlName] : null;
+                break;
 
-        case '$_GET':
-            $dato = isset($_GET[$htmlName]) ? $_GET[$htmlName] : null;
-            break;
-    }
-    return $dato;
-}
-
-/**
- * 
- */
-public static function GuardarFoto($nombre, $extension, $tamanio, $tmpNombre, $path, $nombreSinExtension): bool
-{
-    $uploadOk = false;
-    if ($nombre) {
-
-        $uploadOk = false;
-        switch ($extension) {
-            case "jpg":
-            case "bmp":
-            case "gif":
-            case "png":
-            case "jpeg":
-                //1MB
-                if ($tamanio <= 1000000)
-                    $uploadOk = true;
+            case '$_GET':
+                $dato = isset($_GET[$htmlName]) ? $_GET[$htmlName] : null;
                 break;
         }
-        if (!$uploadOk)
-            echo "<br>Error al subir el archivo " . $nombre . ". Su tamanio excede lo permitido. Su tamaño es: " . $tamanio . " bytes";
-        else {
-            move_uploaded_file($tmpNombre, $path);
-            // echo "<br>Upload correcto " . basename($nombreSinExtension) . ". Extensión " . $extension . ". Tamanio " . $tamanio . "bytes";
-        }
+        return $dato;
     }
-    return $uploadOk;
-}
+
+    /**
+     *
+     */
+    public static function GuardarFoto($nombre, $extension, $tamanio, $tmpNombre, $path, $nombreSinExtension): bool
+    {
+        $uploadOk = false;
+        if ($nombre) {
+
+            $uploadOk = false;
+            switch ($extension) {
+                case "jpg":
+                case "bmp":
+                case "gif":
+                case "png":
+                case "jpeg":
+                    //1MB
+                    if ($tamanio <= 1000000)
+                        $uploadOk = true;
+                    break;
+            }
+            if (!$uploadOk)
+                echo "<br>Error al subir el archivo " . $nombre . ". Su tamanio excede lo permitido. Su tamaño es: " . $tamanio . " bytes";
+            else {
+                move_uploaded_file($tmpNombre, $path);
+                // echo "<br>Upload correcto " . basename($nombreSinExtension) . ". Extensión " . $extension . ". Tamanio " . $tamanio . "bytes";
+            }
+        }
+        return $uploadOk;
+    }
 }

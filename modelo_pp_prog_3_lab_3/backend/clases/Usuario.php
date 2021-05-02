@@ -15,7 +15,7 @@
         /**
          * Constructor con id_perfil por defecto.
          */
-        public function __construct(
+        public function __construct(            
             $nombre = "",
             $correo = "",
             $clave = "",
@@ -123,62 +123,26 @@
          */
         public static function TraerTodos(): array
         {
-            $listaAuxiliar = array();
+            $tablaUno = 'usuarios';
+            $tablaDos = 'perfiles';
+
             $listaUsuarios = array();
-            $usuario = new Usuario();
 
             $objetoAccesoDatos = AccesoDatos::RetornarObjetoAcceso();
-            $consulta = $objetoAccesoDatos->RetornarConsulta("SELECT usuarios.nombre,
-            perfiles.descripcion, usuarios.correo, usuarios.clave, usuarios.id
-            FROM usuarios
-            INNER JOIN perfiles ON usuarios.id_perfil = perfiles.id");
 
-            // $consulta = $objetoAccesoDatos->RetornarConsulta('SELECT * FROM usuarios');
+            $consulta = $objetoAccesoDatos->RetornarConsulta("SELECT $tablaUno.id, $tablaUno.nombre, $tablaUno.correo,
+                                                         $tablaUno.clave,$tablaDos.descripcion AS perfil,$tablaUno.id_perfil 
+            FROM $tablaUno 
+            INNER JOIN $tablaDos 
+            ON $tablaUno.id_perfil = $tablaDos.id");
+
             $consulta->execute();
-            // $consulta->setFetchMode(PDO::FETCH_INTO, new Usuario);
+            $consulta->setFetchMode(PDO::FETCH_INTO, new Usuario);
 
-
-
-            $consulta->setFetchMode(PDO::FETCH_CLASS, 'Usuario', array(0 => false));
-
-            while ($row = $consulta->fetch()) {
-                array_push($listaAuxiliar, $row);
+            foreach ($consulta as $item) {
+                array_push($listaUsuarios, $item);
             }
 
-            // $i=0;
-            // for($i=0; $i<count($listaAuxiliar) ; $i++){
-            //     $usuario->id = $listaAuxiliar[$i]->id;
-            //     $usuario->nombre = $item->nombre;
-            //     $usuario->correo = $item->correo;
-            //     $usuario->clave = $item->clave;
-            //     $usuario->perfil = $item->descripcion;
-            //     $i++;
-            // }
-
-            // var_dump($listaAuxiliar);
-            // die();
-
-            $index = 0;
-            foreach ($listaAuxiliar as $item) {
-                $usuario->id = $item->id;
-                $usuario->nombre = $item->nombre;
-                $usuario->correo = $item->correo;
-                $usuario->clave = $item->clave;
-                $usuario->perfil = $item->descripcion;
-
-                // var_dump($usuario);
-
-                $listaUsuarios[$index] = $usuario;
-                var_dump($listaUsuarios);
-                echo "<br>" . "<br>";
-                $index++;
-            }
-            // die();
-
-            // var_dump($listaUsuarios);
-            // die();
-            // return $listaUsuarios;
-            // return $consulta;
             return $listaUsuarios;
         }
 
