@@ -197,13 +197,14 @@ class Fabrica implements IArchivo
 
     /**
      * Genera una tabla con empleados trayendo cada uno desde el metodo GetEmpleados de la clase fabrica.
+     * Si el parámetro es NULL, entonces mostrará los botones. En caso contrario, no los mostrará (para generar un pdf)
      * @return string
      */
-    function GenerarTabla(): string
+    function GenerarTabla($parametro=null): string
     {
         $retorno = "";
         $retorno .= '<h2 style="text-align: center">Lista de empleados</h2>';
-        $retorno .= '<table align="right">';
+        $retorno .= '<table align="right"; width="60%">';
         $listaEmpleados = $this->GetEmpleados();
 
 
@@ -215,15 +216,19 @@ class Fabrica implements IArchivo
             $retorno .= '<td colspan=2>';
             $retorno .= '<img src=' . '../Back/fotos/' . $item->GetPathFoto() . ' alt="fotoEmpleado" width=90px height=90px>';
             $retorno .= '</td>';
-            $retorno .= '<td colspan=2>';
-            $retorno .= '<input type="button" value="Modificar" onclick="ManejadorAjax.ModificarEmpleado(' . $item->GetDni() . ')">';
-            $retorno .= '</td>';
-            $retorno .= '<td colspan=2>';
-            $retorno .= '<input type="button" value="Eliminar" onclick="ManejadorAjax.EliminarEmpleado(' . $item->GetLegajo() . ')">';
+
+            if ($parametro == null) {
+                $retorno .= '<td colspan=2>';
+                $retorno .= '<input type="button" value="Modificar" onclick="ManejadorAjax.ModificarEmpleado(' . $item->GetDni() . ')">';
+                $retorno .= '</td>';
+                $retorno .= '<td colspan=2>';
+                $retorno .= '<input type="button" value="Eliminar" onclick="ManejadorAjax.EliminarEmpleado(' . $item->GetLegajo() . ')">';
+            }
             $retorno .= '</td>';
             $retorno .= '</tr>';
         }
         $retorno .= '</table>';
+
         return $retorno;
 
     }

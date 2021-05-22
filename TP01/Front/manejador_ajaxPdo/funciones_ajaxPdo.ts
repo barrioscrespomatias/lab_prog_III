@@ -159,13 +159,14 @@ namespace ManejadorAjax {
         xhr.onreadystatechange = () => {
 
             if (xhr.readyState == 4 && xhr.status == 200) {
-                CargarTablaDom(xhr.responseText);                
+                CargarTablaDom(xhr.responseText);                               
             }
         };
 
 
     }
 
+    
     function ObtenerFormulario()
     {
         let xhr: XMLHttpRequest = new XMLHttpRequest();
@@ -205,7 +206,6 @@ namespace ManejadorAjax {
         tabla.innerHTML ="";
         tabla.innerHTML+= cadena;
     }
-
 
 
 

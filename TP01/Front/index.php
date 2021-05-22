@@ -1,8 +1,9 @@
 <?php
 
+include_once '../Back/verificarUsuario.php';
 include_once '../Back/entidades/fabrica.php';
 include_once '../Back/entidades/empleado.php';
-include_once '../Back/verificarUsuario.php';
+
 
 $valorDniEmpleado = isset($_POST['inputHidden']) ? $_POST["inputHidden"] : null;
 $pathArchivo = '../Back/archivos/empleados.txt';

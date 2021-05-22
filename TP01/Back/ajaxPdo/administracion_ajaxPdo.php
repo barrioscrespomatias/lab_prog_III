@@ -155,7 +155,7 @@ function GenerarFormularioHtml()
     $formulario = "";
     $formulario .= '
         <h2 style="text-align: center"><' . $tituloPagina . '></h2>
-        <table align="left">
+        <table align="left" width="40%">
     <thead>
     <td colspan="12">
         <h4>Datos Personales</h4>

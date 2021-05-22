@@ -1,8 +1,12 @@
-/// <reference path="../libs/jquery/index.d.ts" />
+/// <reference path="../../../node_modules/@types/jquery/index.d.ts" />
 
 $(function(){
-
+    
     JqueryAjaxTraerCds();
+    $("#divModificar").hide();
+    CargarEventoModificar();
+    
+
 
 });
 
@@ -25,6 +29,9 @@ function JqueryAjaxTraerCds():void {
         $("#divResultado").html(resultado);
 
         manejador_click_btn_eliminar();
+        manejador_click_btn_modificar();
+        
+        
     })
     .fail(function (jqXHR:any, textStatus:any, errorThrown:any) {
         alert(jqXHR.responseText + "\n" + textStatus + "\n" + errorThrown);
@@ -81,4 +88,94 @@ function manejador_click_btn_eliminar(){
             
         });
     }
+}
+
+
+
+function manejador_click_btn_modificar(){
+
+    var $btn = $('[data-action="btn_modificar"]');
+
+    if ($btn) {
+
+        $btn.on('click', function(e:any) {
+
+            e.preventDefault();
+
+            let obj_cd_string = $(this).attr("data-obj");
+
+            let obj_cd:any;
+
+            if(obj_cd_string !== undefined){
+
+                obj_cd = JSON.parse(obj_cd_string);
+
+            }
+            else
+            {
+                console.log("no se recupero el json");
+                return;
+            }
+            
+            let confirma = confirm("\u00BFModificar " + obj_cd.titulo + " - " + obj_cd.anio + "?");
+
+            if( ! confirma)
+            {
+                 return; 
+            }
+            else
+            {
+                $("#divModificar").show();
+            }
+            
+
+
+
+            let btnModificar = $("#btnModificar").val;
+            if(btnModificar !== undefined)
+            {
+                obj_cd.id = obj_cd.id;
+                obj_cd.titulo =  $("#titulo").val;
+                obj_cd.interprete =  $("#interprete").val;
+                obj_cd.anio =  $("#anio").val;
+
+                var data = [];
+                data.push({name: "cd", value: obj_cd});
+                data.push({name: "op", value: "modificarCd_json"});
+
+                $.post("./BACKEND/POO/nexo.php", data, function (rta:any) {
+
+                    console.log(rta);
+    
+                    if(rta.exito){
+    
+                        $("#divResultado").empty();
+    
+                        JqueryAjaxTraerCds();
+                    }
+    
+                }, "json").fail(function (a:any) {
+    
+                    console.log(a.responseText);
+    
+                });
+            }
+
+
+
+
+
+
+        });
+    }
+}
+
+function CargarEventoModificar()
+{
+    $("btnModificar").on("click",function(){
+        $("#btnModificar").val("Modificar");
+    });
+
+
+
 }

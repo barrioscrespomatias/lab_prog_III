@@ -1,4 +1,5 @@
 <?php
+
 include_once '../Back/verificarUsuario.php';
 
 ?>
@@ -16,7 +17,6 @@ include_once '../Back/verificarUsuario.php';
     <title>Modificar el titulo</title>
 
 </head>
-
     <body onload="ManejadorAjax.CargarPagina()">
         <div id="divAlta" style="width: 20%; display:inline"></div>
         <div id="divModificar" style="width: 20%; display:inline"></div>
@@ -26,5 +26,7 @@ include_once '../Back/verificarUsuario.php';
             <p>empleados</p>
         </div>
     </body>
-
+    <footer>
+        <a href="">Cerrar Sesión</a>
+    </footer>
 </html>

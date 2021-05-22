@@ -1,6 +1,5 @@
 <?php
-include_once '../Back/entidades/verificarUsuarioPdo.php';
-
+require_once '../Back/verificarUsuarioPdo.php';
 ?>
 
 
@@ -10,21 +9,32 @@ include_once '../Back/entidades/verificarUsuarioPdo.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="estilos.css">
     <script src="./javascript/validaciones.js"></script>
     <script src="./manejador_ajaxPdo/manejador.js"></script>
+    <link rel="stylesheet" type="text/css" href="estilos.css">
     <title>Modificar el titulo</title>
 
 </head>
 
-    <body onload="ManejadorAjax.RecargarPagina()">
-        <div id="divAlta" style="width: 20%; display:inline"></div>
-        <div id="divModificar" style="width: 20%; display:inline"></div>
+<body onload="ManejadorAjax.RecargarPagina()">
+<div id="container" >
+
+    <div id="divAlta" ></div>
+
+    <div id="divModificar" ></div>
+
+    <div id="divTablaEmpleados">
+        <p></p>
+    </div>
+    <div id="divPdf">
+        <a href="../Front/indexToPdf.php">Mostrar empleados en PDF</a>
+    </div>
+</div>
 
 
-        <div id="divTablaEmpleados" style="width: 70%; display:inline">
-            <p></p>
-        </div>
-    </body>
 
+</body>
+<footer>
+    <a href="../Back/cerrarSesionPdo.php"><h2>Cerrar Sesión</h2></a>
+</footer>
 </html>
