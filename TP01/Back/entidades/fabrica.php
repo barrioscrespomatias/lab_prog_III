@@ -2,6 +2,7 @@
 const CANT_ATRIBUTOS = 9;
 include_once 'empleado.php';
 include_once 'interfaces.php';
+include_once 'AccesoDatos.php';
 
 
 class Fabrica implements IArchivo
@@ -18,6 +19,20 @@ class Fabrica implements IArchivo
         $this->_empleados = array();
     }
 
+    //region Getters y Setters
+    //Hace públicos los empleados.
+    public function GetEmpleados(): array
+    {
+        return $this->_empleados;
+    }
+
+    public function SetEmpleados($listaEmpleados)
+    {
+        $this->_empleados = $listaEmpleados;
+    }
+    //endregion
+
+
     //Agrega a la fábrica el empleado pasado como parámetro.
     //En caso de poder agregarlo devuelve true.
     //Sino pude agregarlo retorna false y lo notifica por echo.
@@ -30,19 +45,14 @@ class Fabrica implements IArchivo
         $cantidadActualEmpleados = 0;
 
         if ($emp != null && $cantidadInicialEmpleados < $this->_cantidadMaxima) {
-            // if (!$this->EmpleadoExiste($emp)) {
             array_push($this->_empleados, $emp);
             $cantidadActualEmpleados = count($this->_empleados);
             if ($cantidadInicialEmpleados < $cantidadActualEmpleados) {
                 $this->EliminarEmpleadosRepetidos();
                 if (count($this->_empleados) > $cantidadInicialEmpleados)
                     $retorno = true;
-                else
-                    echo "Se eliminó el registro repetido de " . $emp->GetNombre() . "<br>";
             }
-            // } 
-            else
-                echo ("No se pudo agregar al empleado.\n");
+
         }
 
         return $retorno;
@@ -56,8 +66,8 @@ class Fabrica implements IArchivo
             foreach ($this->_empleados as $item) {
                 $sueldos += $item->GetSueldo();
             }
-        } else
-            echo "No hay ningun empleado cargado";
+        } /*else
+            echo "No hay ningun empleado cargado";*/
 
         return $sueldos;
     }
@@ -82,9 +92,9 @@ class Fabrica implements IArchivo
         if ($index !== false) {
             unset($this->_empleados[$index]);
             $retorno = true;
-            echo "Se ha eliminado el empleado " . $emp->GetNombre() . "<br>";
-        } else
-            echo "El empleado no existe!!<br>";
+            /*            echo "Se ha eliminado el empleado " . $emp->GetNombre() . "<br>";*/
+        } /*else
+            echo "El empleado no existe!!<br>";*/
         return $retorno;
     }
 
@@ -125,8 +135,6 @@ class Fabrica implements IArchivo
                 $contadorEmpleadosGuardados++;
             }
         }
-        if ($contadorEmpleadosGuardados == count($this->_empleados))
-            echo "Se han guardado los empleados en el archivo!!";
 
         fclose($archivo);
     }
@@ -138,38 +146,25 @@ class Fabrica implements IArchivo
     {
 
         $archivo = fopen($nombreArchivo, "r");
-        $cantidadAnteriorEmpleados = count($this->_empleados);
         $contador = 0;
-
 
         if ($archivo !== false) {
             while (!feof($archivo)) {
                 $renglon = fgets($archivo);
-                $cantidad= strlen($renglon);
 
                 //Renglon
                 $empleado = explode("-", $renglon);
-                $cantidad = count($empleado);
-                if ($renglon != false && count($empleado) == CANT_ATRIBUTOS ) {
+                if ($renglon != false && count($empleado) == CANT_ATRIBUTOS) {
                     $variableTipoEmpleado = new Empleado($empleado[0], $empleado[1], $empleado[2], $empleado[3], $empleado[4], $empleado[5], $empleado[6]);
                     $variableTipoEmpleado->SetPathFoto($empleado[7] . "-" . $empleado[8]);
                     if ($this->AgregarEmpleado($variableTipoEmpleado))
                         $contador++;
                 }
             }
-            $cantidadActualDeEmpleados = count($this->_empleados);
-            if ($cantidadAnteriorEmpleados + $contador == $cantidadActualDeEmpleados);
-            echo "Se han obtenido los empleados del archivo de texto.<br>";
         }
-        else
-        echo "Todavía no se han cargado empleados<br>";
     }
 
-    //Hace públicos los empleados.
-    public function GetEmpleados(): array
-    {
-        return $this->_empleados;
-    }
+
 
 
 
@@ -199,4 +194,189 @@ class Fabrica implements IArchivo
         return $retorno;
     }
     /* #endregion */
+
+    /**
+     * Genera una tabla con empleados trayendo cada uno desde el metodo GetEmpleados de la clase fabrica.
+     * @return string
+     */
+    function GenerarTabla(): string
+    {
+        $retorno = "";
+        $retorno .= '<h2 style="text-align: center">Lista de empleados</h2>';
+        $retorno .= '<table align="right">';
+        $listaEmpleados = $this->GetEmpleados();
+
+
+        foreach ($listaEmpleados as $item) {
+            $retorno .= '<tr>';
+            $retorno .= '<td colspan=6>';
+            $retorno .= $item->ToString();
+            $retorno .= '</td>';
+            $retorno .= '<td colspan=2>';
+            $retorno .= '<img src=' . '../Back/fotos/' . $item->GetPathFoto() . ' alt="fotoEmpleado" width=90px height=90px>';
+            $retorno .= '</td>';
+            $retorno .= '<td colspan=2>';
+            $retorno .= '<input type="button" value="Modificar" onclick="ManejadorAjax.ModificarEmpleado(' . $item->GetDni() . ')">';
+            $retorno .= '</td>';
+            $retorno .= '<td colspan=2>';
+            $retorno .= '<input type="button" value="Eliminar" onclick="ManejadorAjax.EliminarEmpleado(' . $item->GetLegajo() . ')">';
+            $retorno .= '</td>';
+            $retorno .= '</tr>';
+        }
+        $retorno .= '</table>';
+        return $retorno;
+
+    }
+
+    //region PDO
+
+    public function AgregarEmpleadoDB(Empleado $empleado)
+    {
+        $retorno = false;
+        $objetoAccesoDato = AccesoDatos::RetornarObjetoAcceso();
+
+        $empleadoAuxiliar = new Empleado();
+
+        $empleadoAuxiliar->SetNombre($empleado->GetNombre());
+        $empleadoAuxiliar->SetApellido($empleado->GetApellido());
+        $empleadoAuxiliar->SetDni($empleado->GetDni());
+        $empleadoAuxiliar->SetSexo($empleado->GetSexo());
+        $empleadoAuxiliar->SetLegajo($empleado->GetLegajo());
+        $empleadoAuxiliar->SetSueldo($empleado->GetSueldo());
+        $empleadoAuxiliar->SetTurno($empleado->GetTurno());
+        $empleadoAuxiliar->SetPathFoto($empleado->GetPathFoto());
+
+        $consulta = $objetoAccesoDato->RetornarConsulta("INSERT INTO empleados (nombre,apellido,dni,sexo,legajo,sueldo,turno,pathFoto)"
+            . " VALUES(:nombre, :apellido, :dni, :sexo, :legajo, :sueldo, :turno, :pathFoto)");
+
+        //bindParam asocia un valor con la clave del insert.
+        // $consulta->bindValue(':id', $this->id, PDO::PARAM_INT);
+        $consulta->bindValue(':nombre', $empleadoAuxiliar->GetNombre(), PDO::PARAM_STR);
+        $consulta->bindValue(':apellido', $empleadoAuxiliar->GetApellido(), PDO::PARAM_STR);
+        $consulta->bindValue(':dni', $empleadoAuxiliar->GetDni(), PDO::PARAM_INT);
+        $consulta->bindValue(':sexo', $empleadoAuxiliar->GetSexo(), PDO::PARAM_STR);
+        $consulta->bindValue(':legajo', $empleadoAuxiliar->GetLegajo(), PDO::PARAM_INT);
+        $consulta->bindValue(':sueldo', $empleadoAuxiliar->GetSueldo(), PDO::PARAM_STR);
+        $consulta->bindValue(':turno', $empleadoAuxiliar->GetTurno(), PDO::PARAM_STR);
+        $consulta->bindValue(':pathFoto', $empleadoAuxiliar->GetPathFoto(), PDO::PARAM_STR);
+
+        $retorno = $consulta->execute();
+
+        return $retorno;
+    }
+
+    public function TraerTodosEmpleadosDB()
+    {
+        //retorna una lista de empleados.
+        $listaEmpleados = array();
+
+        $objetoAccesoDatos = AccesoDatos::RetornarObjetoAcceso();
+
+        /*        $consulta = $objetoAccesoDatos->RetornarConsulta("SELECT empleados.nombre,empleados.apellido,
+                                                                 empleados.dni,empleados.sexo,empleados.legajo,
+                                                                 empleados.sueldo,empleados.turno,empleados.pathFoto,
+                FROM empleados");*/
+
+        $consulta = $objetoAccesoDatos->RetornarConsulta("SELECT * FROM empleados");
+
+        //Atenti con el alias.
+
+        $consulta->execute();
+
+        $consulta->execute();
+        while ($fila = $consulta->fetch(PDO::FETCH_OBJ)) {
+            $empleado = new Empleado();
+            /*$empleado->Set = $fila->id;*/
+
+            $empleado->SetNombre($fila->nombre);
+            $empleado->SetApellido($fila->apellido);
+            $empleado->SetDni($fila->dni);
+            $empleado->SetSexo($fila->sexo);
+            $empleado->SetLegajo($fila->legajo);
+            $empleado->SetSueldo($fila->sueldo);
+            $empleado->SetTurno($fila->turno);
+            $empleado->SetPathFoto($fila->pathFoto);
+
+            array_push($listaEmpleados, $empleado);
+        }
+        return $listaEmpleados;
+    }
+
+    public function EliminarEmpleadoDB($legajo)
+    {
+        $retorno = false;
+
+        $objetoAccesoDato = AccesoDatos::RetornarObjetoAcceso();
+
+        $consulta = $objetoAccesoDato->RetornarConsulta("DELETE FROM empleados WHERE empleados.legajo = :legajo");
+
+        $consulta->bindParam(':legajo', $legajo, PDO::PARAM_INT);
+
+        $consulta->execute();
+
+        $eliminado = $consulta->rowCount();
+        if ($eliminado > 0)
+            $retorno = true;
+
+        return $retorno;
+    }
+
+    public function ModificarEmpleado(Empleado $empleado)
+    {
+        $retorno = false;
+
+        $objetoAccesoDato = AccesoDatos::RetornarObjetoAcceso();
+
+        $consulta = $objetoAccesoDato->RetornarConsulta("UPDATE empleados SET nombre = :nombre,
+            apellido = :apellido,sexo = :sexo, sueldo = :sueldo,turno=:turno,pathFoto=:foto
+            WHERE empleados.dni = :dni");
+
+
+        $consulta->bindParam(':nombre', $empleado->GetNombre(), PDO::PARAM_STR);
+        $consulta->bindParam(':apellido', $empleado->GetApellido(), PDO::PARAM_STR);
+        $consulta->bindParam(':sexo', $empleado->GetSexo(), PDO::PARAM_STR);
+        $consulta->bindParam(':sueldo', $empleado->GetSueldo(), PDO::PARAM_STR);
+        $consulta->bindParam(':turno', $empleado->GetTurno(), PDO::PARAM_STR);
+        $consulta->bindParam(':foto', $empleado->GetPathFoto(), PDO::PARAM_STR);
+        $consulta->bindParam(':dni', $empleado->GetDni(), PDO::PARAM_INT);
+
+        $consulta->execute();
+        $filasAfectadas = $consulta->rowCount();
+        if ($filasAfectadas > 0)
+            $retorno = true;
+
+        return $retorno;
+
+
+    }
+
+
+    /**
+     * Buscar un empleado en la base de datos
+     * Lo puede buscar por DNI o por Legajo.
+     * @param null $legajo
+     * @param null $dni
+     * @return mixed|null
+     */
+    public function BuscarEmpleado($legajo = null, $dni = null)
+    {
+        $empleadoAuxiliar = null;
+
+
+        foreach ($this->_empleados as $item) {
+            if ($item->GetLegajo() == $legajo || $item->GetDni() == $dni) {
+                $empleadoAuxiliar = $item;
+                break;
+            }
+        }
+
+        return $empleadoAuxiliar;
+    }
+
+    //ExisteEmpleado
+
+
+    //endregion
+
+
 }

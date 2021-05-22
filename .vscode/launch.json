@@ -21,7 +21,7 @@
             // "program": "${workspaceFolder}\\laboratorio_3\\clase03\\test\\final.js",
             // "program": "${workspaceFolder}\\laboratorio_3\\clase03\\manejador.js",
             // "program": "${workspaceFolder}\\TP01\\Front\\parte_04\\validaciones.js",
-            "program": "${workspaceFolder}\\laboratorio_3\\clase04\\ejercicios\\ej08\\ej08.js",
+            "program": "${workspaceFolder}\\modelo_pp_prog_3_lab_3\\frontend\\entidades\\Manejador.js",
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
             ]

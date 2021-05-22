@@ -222,9 +222,6 @@ let AdministrarValidacionesLogin: Function = (): void => {
 /* #region  FUNCIONES */
 
 let AdministrarModificar:Function = (dniEmpleado:string):void => {
-
-    
-
     (<HTMLInputElement>document.getElementById("inputHidden")).value = dniEmpleado;
     let formularioHidden:HTMLFormElement = <HTMLFormElement>document.getElementById("formularioHidden"); 
     formularioHidden.submit();
@@ -288,13 +285,13 @@ let ValidarCombo: Function = (valorCombo: string, valorComboIncorrecto: string):
 
 }
 
-let ObtenerTurnoSeleccionado: Function = (): string => {
-    let retorno: string = "";
+let ObtenerTurnoSeleccionado: Function = (): number => {
+    let retorno: number = 0;
     let valorRdio: NodeListOf<HTMLElement> = document.getElementsByName("rdoTurno");
 
     valorRdio.forEach(element => {
         if ((<HTMLInputElement>element).checked)
-            retorno += (<HTMLInputElement>element).value;
+            retorno += parseInt((<HTMLInputElement>element).value);
     });
 
 

@@ -38,7 +38,4 @@ switch ($btnEnviar) {
         }           
 
         break;
-    case "Error":
-        echo "Hubo un error en la petición.<br>";
-        break;
 }

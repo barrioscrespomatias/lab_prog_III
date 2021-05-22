@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PhpIncludePathManager">
+    <include_path>
+      <path value="$PROJECT_DIR$/ejemplo_composer/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/ejemplo_composer/vendor/mpdf/mpdf" />
+      <path value="$PROJECT_DIR$/ejemplo_composer/vendor/phenx/php-font-lib" />
+      <path value="$PROJECT_DIR$/ejemplo_composer/vendor/setasign/fpdi" />
+      <path value="$PROJECT_DIR$/ejemplo_composer/vendor/phenx/php-svg-lib" />
+      <path value="$PROJECT_DIR$/ejemplo_composer/vendor/paragonie/random_compat" />
+      <path value="$PROJECT_DIR$/ejemplo_composer/vendor/dompdf/dompdf" />
+      <path value="$PROJECT_DIR$/ejemplo_composer/vendor/sabberworm/php-css-parser" />
+      <path value="$PROJECT_DIR$/ejemplo_composer/vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/ejemplo_composer/vendor/composer" />
+    </include_path>
+  </component>
+  <component name="PhpProjectSharedConfiguration" php_language_level="7.4">
+    <option name="suggestChangeDefaultLanguageLevel" value="false" />
+  </component>
+</project>

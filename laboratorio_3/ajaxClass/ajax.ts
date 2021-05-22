@@ -81,17 +81,8 @@ class Ajax {
         
         let form : FormData = new FormData();
 
-        let archivo : any = document.getElementById("txtFoto"); 
-        
+        let archivo : any = document.getElementById("txtFoto");
 
-        //Agregar atributos al formulario
-        // form.append('nombre', params[0].nombre);
-        // form.append('apellido', params[0].apellido);
-        // form.append('dni', params[0].dni);
-        // form.append('sexo', params[0].sexo);
-        // form.append('legajo', params[0].legajo);
-        // form.append('sueldo', params[0].sueldo);
-        // form.append('turno', params[0].turno);
 
         //Atributos en forma de Json.
         form.append('empleado', JSON.stringify(params[0]));

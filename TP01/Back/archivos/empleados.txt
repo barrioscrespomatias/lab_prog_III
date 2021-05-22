@@ -1,10 +1,3 @@
-Roman-Riquelme-1000002-M-102-15000-Mañana-./fotos/1000002-Riquelme.png
+Leo-Messi-1000000-M-100-9500-Tarde-../fotos/1000000-Messi.jpg
 
-Leonel-Messi-1000000-M-100-15000-Mañana-./fotos/1000000-Messi.jpg
-
-Primero-Castolo-1000001-M-101-16000-Noche-./fotos/1000001-Castolo.jpg
-
-Hernan-Crespo-1000003-M-103-17000-Noche-./fotos/1000003-Crespo.jpg
-
-Crespo-Matias-1000000-M-100-8000-Noche-./fotos/1000000-Matias.png
-
+Carles-Puyol-1000002-M-102-9000-Noche-../fotos/1000002-Puyol.jpeg
